@@ -117,6 +117,9 @@ module.exports = class extends Generator {
             }, {
                 name: 'React',
                 value: 'react'
+            }, {
+                name: 'React-SSR',
+                value: 'react-ssr'
             }],
             when: answer => answer.projectType === 'h5'
 
@@ -275,6 +278,63 @@ module.exports = class extends Generator {
                         groupName: this.groupName
                     }
                 );
+
+                break;
+
+            case 'react-ssr':
+
+                if (this.useRedux) {
+                    tplFile = `${this.frameType}-redux`;
+                } else {
+                    tplFile = `${this.frameType}`;
+                }
+
+                tplPath = this.templatePath(`../${tplFile}`);
+
+                this.fs.copyTpl(
+                    tplPath,
+                    outPutUrl,
+                    {
+                        name: this.name,
+                        author: this.author,
+                        frameType: this.frameType,
+                        email: this.email,
+                        version: this.version,
+                        desc: this.desc,
+                        groupName: this.groupName,
+                        resetCss: resetCss,
+                        flexibleStr: '<%= htmlWebpackPlugin.options.flexibleStr %>'
+                    }
+                );
+
+                this.fs.copyTpl(
+                    this.templatePath(`../_gitignore`),
+                    outPutUrl + '.gitignore'
+                );
+                this.fs.copyTpl(
+                    this.templatePath(`../_editorconfig`),
+                    outPutUrl + '.editorconfig'
+                );
+
+                // Copy all dotfiles
+                this.fs.copy(
+                    this.templatePath(`../../common/ssrConfig/.*`),
+                    outPutUrl
+                );
+
+                //add scss
+                this.fs.copyTpl(
+                    this.templatePath(`../../common/scss_mixin`),
+                    `${outPutUrl}src/scss_mixin/`
+                );
+
+                //add utils 语法糖
+                this.fs.copyTpl(
+                    this.templatePath(`../../common/utils`),
+                    `${outPutUrl}src/tools/utils/`
+                );
+
+                break;
             
 
             case 'react':
