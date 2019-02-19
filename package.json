@@ -1,14 +1,6 @@
 {
   "name": "generator-earth",
-  "version": "1.0.3",
-  "description": "react dev prod and so on",
-  "authors": [
-    {
-      "name": "David Feng",
-      "email": "sublime3@163.com",
-      "url": ""
-    }
-  ],
+  "version": "1.0.4",
   "files": [
     "app",
     "component",
@@ -18,10 +10,6 @@
     "update"
   ],
   "main": "app/index.js",
-  "keywords": [
-    "yoman generator webpack node ",
-    "yeoman-generator"
-  ],
   "dependencies": {
     "colors": "^1.1.2",
     "inquirer": "^3.2.2",

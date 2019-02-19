@@ -128,6 +128,9 @@ module.exports = class extends Generator {
             choices: [{
                 name: 'React-ant',
                 value: 'react-ant'
+            }, {
+                name: 'React-ant-multi-pages',
+                value: 'react-ant-multi-pages'
             }],
             when: answer => answer.projectType === 'pc'
 
@@ -333,6 +336,7 @@ module.exports = class extends Generator {
 
             
             case 'react-ant':
+            case 'react-ant-multi-pages':
 
                 tplFile = `${this.frameType}`;
 
