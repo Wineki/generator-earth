@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import Loadable from 'react-loadable';
 import { Switch, Route, Link } from 'react-router-dom'
 import { Layout, Menu, Icon, Spin } from 'antd'
-
-import AsyncBundle from 'ROOT_SOURCE/base/AsyncBundle'
 
 import './App.scss'
 
@@ -15,58 +13,48 @@ import Reconciliation from './containers/Reconciliation/'
 
 
 //1
-const AssetMgmtAsync = () => import(
-    './containers/AssetMgmt/' /* webpackChunkName:"AssetMgmt" */
-)
-const AssetMgmt = (props) => (
-    <AsyncBundle load={AssetMgmtAsync}>
-        {(Mod) => (<Mod {...props}/>)}
-    </AsyncBundle>
-)
+const AssetMgmt = Loadable({
+    loader: () => import('./containers/AssetMgmt/' /* webpackChunkName:"AssetMgmt" */),
+    loading() {
+        return null;
+    }
+});
 
 
 //2
-const AssetProdMgmtAsync = () => import(
-    './containers/AssetProdMgmt/' /* webpackChunkName:"AssetProdMgmt" */
-)
-const AssetProdMgmt = (props) => (
-    <AsyncBundle load={AssetProdMgmtAsync}>
-        {(Mod) => (<Mod {...props}/>)}
-    </AsyncBundle>
-)
+const AssetProdMgmt = Loadable({
+    loader: () => import('./containers/AssetProdMgmt/' /* webpackChunkName:"AssetProdMgmt" */),
+    loading() {
+        return null;
+    }
+});
 
 
 //3
-const FundChannelCfgAsync = () => import(
-    './containers/FundChannelCfg/' /* webpackChunkName:"FundChannelCfg" */
-)
-const FundChannelCfg = (props) => (
-    <AsyncBundle load={FundChannelCfgAsync}>
-        {(Mod) => (<Mod {...props}/>)}
-    </AsyncBundle>
-)
+const FundChannelCfg = Loadable({
+    loader: () => import('./containers/FundChannelCfg/' /* webpackChunkName:"FundChannelCfg" */),
+    loading() {
+        return null;
+    }
+});
 
 
 //4
-const FunderMgmtAsync = () => import(
-    './containers/FunderMgmt/' /* webpackChunkName:"FunderMgmt" */
-)
-const FunderMgmt = (props) => (
-    <AsyncBundle load={FunderMgmtAsync}>
-        {(Mod) => (<Mod {...props}/>)}
-    </AsyncBundle>
-)
+const FunderMgmt = Loadable({
+    loader: () => import('./containers/FunderMgmt/' /* webpackChunkName:"FunderMgmt" */),
+    loading() {
+        return null;
+    }
+});
 
 
 //5
-const FunderProdMgmtAsync = () => import(
-    './containers/FunderProdMgmt/' /* webpackChunkName:"FunderProdMgmt" */
-)
-const FunderProdMgmt = (props) => (
-    <AsyncBundle load={FunderProdMgmtAsync}>
-        {(Mod) => (<Mod {...props}/>)}
-    </AsyncBundle>
-)
+const FunderProdMgmt = Loadable({
+    loader: () => import('./containers/FunderProdMgmt/' /* webpackChunkName:"FunderProdMgmt" */),
+    loading() {
+        return null;
+    }
+});
 
 
 

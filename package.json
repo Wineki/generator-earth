@@ -1,6 +1,6 @@
 {
   "name": "generator-earth",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "files": [
     "app",
     "component",
@@ -12,11 +12,11 @@
   "main": "app/index.js",
   "dependencies": {
     "colors": "^1.1.2",
-    "inquirer": "^3.2.2",
+    "inquirer": "^6.2.2",
     "mkdirp": "^0.5.1",
     "npm-updater": "^3.0.3",
     "shelljs": "^0.7.8",
-    "yeoman-generator": "^1.0.0"
+    "yeoman-generator": "^3.0.0"
   },
   "repository": "git@github.com:FFF-team/generator-earth.git",
   "license": "MIT",
