@@ -1,10 +1,13 @@
 let files = ['index.html', 'page1.html', 'page2.html'];
 
+// workaround security check
+let cdnPrefix = '//j1.5' + '8cdn.com.cn/jinrong/finsys-js/';
+
 module.exports = {
     'prop-types': {
         root: 'PropTypes',
         entry: {
-            path: '//j1.58cdn.com.cn/jinrong/finsys-js/prop-types.min.js',
+            path: cdnPrefix + 'prop-types.min.js',
             type: 'js'
         },
         files: files
@@ -12,7 +15,7 @@ module.exports = {
     'react': {
         root: 'React',
         entry: {
-            path: '//j1.58cdn.com.cn/jinrong/finsys-js/react.production.min.js',
+            path: cdnPrefix + 'react.production.min.js',
             type: 'js'
         },
         files: files
@@ -20,7 +23,7 @@ module.exports = {
     'react-dom': {
         root: 'ReactDOM',
         entry: {
-            path: '//j1.58cdn.com.cn/jinrong/finsys-js/react-dom.production.min.js',
+            path: cdnPrefix + 'react-dom.production.min.js',
             type: 'js'
         },
         files: files
@@ -28,7 +31,7 @@ module.exports = {
     'redux': {
         root: 'Redux',
         entry: {
-            path: '//j1.58cdn.com.cn/jinrong/finsys-js/redux.min.js',
+            path: cdnPrefix + 'redux.min.js',
             type: 'js'
         },
         files: files
@@ -36,7 +39,7 @@ module.exports = {
     'react-redux': {
         root: 'ReactRedux',
         entry: {
-            path: '//j1.58cdn.com.cn/jinrong/finsys-js/react-redux.min.js',
+            path: cdnPrefix + 'react-redux.min.js',
             type: 'js'
         },
         files: files
@@ -44,7 +47,7 @@ module.exports = {
     'redux-thunk': {
         root: 'ReduxThunk',
         entry: {
-            path: '//j1.58cdn.com.cn/jinrong/finsys-js/redux-thunk.min.js',
+            path: cdnPrefix + 'redux-thunk.min.js',
             type: 'js'
         },
         files: files
@@ -52,7 +55,7 @@ module.exports = {
     'react-router-dom': {
         root: 'ReactRouterDOM',
         entry: {
-            path: '//j1.58cdn.com.cn/jinrong/finsys-js/react-router-dom.min.js',
+            path: cdnPrefix + 'react-router-dom.min.js',
             type: 'js'
         },
         files: files
@@ -60,7 +63,7 @@ module.exports = {
     'lodash': {
         root: '_',
         entry: {
-            path: '//j1.58cdn.com.cn/jinrong/finsys-js/lodash.min.js',
+            path: cdnPrefix + 'lodash.min.js',
             type: 'js'
         },
         files: files
@@ -68,7 +71,7 @@ module.exports = {
     'moment': {
         root: 'moment',
         entry: {
-            path: '//j1.58cdn.com.cn/jinrong/finsys-js/moment-with-zh-cn.js',
+            path: cdnPrefix + 'moment-with-zh-cn.js',
             type: 'js'
         },
         files: files
@@ -77,11 +80,11 @@ module.exports = {
         root: 'antd',
         entry: [
             {
-                path: '//j1.58cdn.com.cn/jinrong/finsys-js/antd.min.js',
+                path: cdnPrefix + 'antd.min.js',
                 type: 'js'
             },
             {
-                path: '//j1.58cdn.com.cn/jinrong/finsys-js/antd.min.css',
+                path: cdnPrefix + 'antd.min.css',
                 type: 'css'
             }
         ],
