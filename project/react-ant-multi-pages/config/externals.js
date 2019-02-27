@@ -4,7 +4,7 @@ module.exports = {
     'prop-types': {
         root: 'PropTypes',
         entry: {
-            path: '//cdnjs.cloudflare.com/ajax/libs/prop-types/15.5.10/prop-types.min.js',
+            path: '//j1.58cdn.com.cn/jinrong/finsys-js/prop-types.min.js',
             type: 'js'
         },
         files: files
@@ -12,7 +12,7 @@ module.exports = {
     'react': {
         root: 'React',
         entry: {
-            path: '//cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.production.min.js',
+            path: '//j1.58cdn.com.cn/jinrong/finsys-js/react.production.min.js',
             type: 'js'
         },
         files: files
@@ -20,7 +20,7 @@ module.exports = {
     'react-dom': {
         root: 'ReactDOM',
         entry: {
-            path: '//cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.production.min.js',
+            path: '//j1.58cdn.com.cn/jinrong/finsys-js/react-dom.production.min.js',
             type: 'js'
         },
         files: files
@@ -28,7 +28,7 @@ module.exports = {
     'redux': {
         root: 'Redux',
         entry: {
-            path: '//cdnjs.cloudflare.com/ajax/libs/redux/3.7.0/redux.min.js',
+            path: '//j1.58cdn.com.cn/jinrong/finsys-js/redux.min.js',
             type: 'js'
         },
         files: files
@@ -36,7 +36,7 @@ module.exports = {
     'react-redux': {
         root: 'ReactRedux',
         entry: {
-            path: '//cdnjs.cloudflare.com/ajax/libs/react-redux/5.0.5/react-redux.min.js',
+            path: '//j1.58cdn.com.cn/jinrong/finsys-js/react-redux.min.js',
             type: 'js'
         },
         files: files
@@ -44,7 +44,7 @@ module.exports = {
     'redux-thunk': {
         root: 'ReduxThunk',
         entry: {
-            path: '//cdnjs.cloudflare.com/ajax/libs/redux-thunk/2.2.0/redux-thunk.min.js',
+            path: '//j1.58cdn.com.cn/jinrong/finsys-js/redux-thunk.min.js',
             type: 'js'
         },
         files: files
@@ -52,7 +52,7 @@ module.exports = {
     'react-router-dom': {
         root: 'ReactRouterDOM',
         entry: {
-            path: '//cdnjs.cloudflare.com/ajax/libs/react-router-dom/4.2.2/react-router-dom.min.js',
+            path: '//j1.58cdn.com.cn/jinrong/finsys-js/react-router-dom.min.js',
             type: 'js'
         },
         files: files
@@ -60,7 +60,7 @@ module.exports = {
     'lodash': {
         root: '_',
         entry: {
-            path: '//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js',
+            path: '//j1.58cdn.com.cn/jinrong/finsys-js/lodash.min.js',
             type: 'js'
         },
         files: files
@@ -68,8 +68,7 @@ module.exports = {
     'moment': {
         root: 'moment',
         entry: {
-            // todo: path需要改为cdn上已经汉化的版本
-            path: '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js',
+            path: '//j1.58cdn.com.cn/jinrong/finsys-js/moment-with-zh-cn.js',
             type: 'js'
         },
         files: files
@@ -78,11 +77,11 @@ module.exports = {
         root: 'antd',
         entry: [
             {
-                path: '//cdnjs.cloudflare.com/ajax/libs/antd/3.1.0/antd.min.js',
+                path: '//j1.58cdn.com.cn/jinrong/finsys-js/antd.min.js',
                 type: 'js'
             },
             {
-                path: '//cdnjs.cloudflare.com/ajax/libs/antd/3.1.0/antd.min.css',
+                path: '//j1.58cdn.com.cn/jinrong/finsys-js/antd.min.css',
                 type: 'css'
             }
         ],
