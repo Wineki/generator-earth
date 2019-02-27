@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import ListItem from '../../components/ListItem'
 
 //长页面滚动 位置记录
@@ -6,10 +7,11 @@ let scrollSite = 0;
 
 class List extends Component {
 
+
     componentDidMount () {
 
         //回到之前浏览的位置
-        window.scrollTo(0, scrollSite);
+        window.scrollTo(0, scrollSite)
 
     }
 
@@ -19,6 +21,7 @@ class List extends Component {
         scrollSite = window.scrollY;
 
     }
+
 
     render () {
 
@@ -46,4 +49,17 @@ class List extends Component {
 
 }
 
-export default List;
+const mapStateToProps = (state) => {
+
+    return {
+        listData: state.listData
+    }
+
+};
+
+const SiteDetail = connect(mapStateToProps)(List)
+
+SiteDetail.displayName = 'List';
+
+
+export default SiteDetail;

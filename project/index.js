@@ -131,6 +131,9 @@ module.exports = class extends Generator {
             choices: [{
                 name: 'React-ant',
                 value: 'react-ant'
+            }, {
+                name: 'React-ant-multi-pages',
+                value: 'react-ant-multi-pages'
             }],
             when: answer => answer.projectType === 'pc'
 
@@ -284,7 +287,8 @@ module.exports = class extends Generator {
             case 'react-ssr':
 
                 if (this.useRedux) {
-                    tplFile = `${this.frameType}-redux`;
+                    // todo: `${this.frameType}-redux`没写，暂时都用react-ssr中的
+                    tplFile = `${this.frameType}`;
                 } else {
                     tplFile = `${this.frameType}`;
                 }
@@ -393,6 +397,7 @@ module.exports = class extends Generator {
 
             
             case 'react-ant':
+            case 'react-ant-multi-pages':
 
                 tplFile = `${this.frameType}`;
 

@@ -1,20 +1,20 @@
-### generator-earth
-金融通用前端脚手架
-******
+## generator-earth
+58金融通用前端脚手架
 
-### 快速搭建项目
 
-******
-### 使用步骤
-######step1
+## 使用步骤
+
+###### step1
 ```
 npm install -g yo generator-earth
 ```
-######step2
+
+###### step2
 ```
 yo earth
 ```
-######step3
+
+###### step3
 ```
 happy coding
 ```

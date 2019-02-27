@@ -1,30 +1,32 @@
 function parseJSON(response) {
-	return response.json();
+    return response.json();
 }
 const stringifyParams = (params) => (
 
-	Object.keys(params).map((key) => (key + '=' + encodeURIComponent(params[key]))).join('&')
+    Object.keys(params).map((key) => (key + '=' + encodeURIComponent(params[key]))).join('&')
 
 );
 
 function checkStatus(response) {
-	if(response.status >= 200 && response.status < 300) {
-		return response;
-	} else if(response.status === 404) {
-		return response;
-	} else {
-		// message.error('出错啦,错误代码：' + response.status);
-	}
+    if(response.status >= 200 && response.status < 300) {
+        return response;
+    } else if(response.status === 404) {
+        return response;
+    } else {
+        // message.error('出错啦,错误代码：' + response.status);
+    }
 
-	const error = new Error(response.statusText);
-	error.response = response;
-	throw error;
+    const error = new Error(response.statusText);
+    error.response = response;
+    throw error;
 }
 
 function handleData(data) {
-	//过滤条件
-	return data
+    //过滤条件
+    return data
 }
+
+const IS_SEVER = `${process.env.IS_SERVER}` === 'true';
 
 /**
  * Requests a URL, returning a promise.
@@ -35,58 +37,61 @@ function handleData(data) {
  */
 var params = {};
 export default {
-	get: function(url, options) {
-		var params = "?";
-		for(var key in options) {
-			if(options[key]){
-				params += key + "=" + options[key] + "&";
-			}
-		}
-		return fetch(url + params, {
-				method: "get",
-				headers: {
-					'cache-control': 'no-cache',
-		            'referer-url': window.location.href,
-		            'Content-Type': 'application/json; charset=utf-8',
-		            'Accept': 'application/json'
-				},
-				credentials: 'include'
-			})
-			.then(checkStatus)
-			.then(parseJSON)
-			.then(handleData)
-			.catch(err => ({
-				err
-			}));
-	},
-	post: function(url, options) {
-		return fetch(url, {
-				method: "post",
-				headers: {
-					'cache-control': 'no-cache',
-		            'referer-url': window.location.href,
-		            'Content-Type': 'application/json; charset=utf-8',
-		            'Accept': 'application/json'
-				},
-				credentials: 'include',
-				body: stringifyParams(options)
-			})
-			.then(checkStatus)
-			.then(parseJSON)
-			.then(handleData)
-			.catch(err => ({
-				err
-			}));
-	},
-	setParams: function(data) {
-		for(var k in data) {
-			params[k] = data[k];
-		}
-	},
-	clearParams: function() {
-		params = {};
-	},
-	getParams: function() {
-		return params;
-	}
+    get: function(url, options) {
+        var params = "?";
+        for(var key in options) {
+            if(options[key]){
+                params += key + "=" + options[key] + "&";
+            }
+        }
+        return fetch(url + params, {
+            method: "get",
+            headers: {
+                'cache-control': 'no-cache',
+                'referer-url': window.location.href,
+                'Content-Type': 'application/json; charset=utf-8',
+                'Accept': 'application/json'
+            },
+            credentials: 'include'
+        })
+            .then(checkStatus)
+            .then(parseJSON)
+            .then(handleData)
+            .catch(err => ({
+                err
+            }));
+    },
+    post: function(url, options) {
+
+        url = IS_SEVER ? `http://localhost:8001${url}` : `${url}`;
+
+        return fetch(url, {
+            method: "post",
+            headers: {
+                'cache-control': 'no-cache',
+                'referer-url': window.location.href,
+                'Content-Type': 'application/json; charset=utf-8',
+                'Accept': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(options)
+        })
+            .then(checkStatus)
+            .then(parseJSON)
+            .then(handleData)
+            .catch(err => ({
+                err
+            }));
+    },
+    setParams: function(data) {
+        for(var k in data) {
+            params[k] = data[k];
+        }
+    },
+    clearParams: function() {
+        params = {};
+    },
+    getParams: function() {
+        return params;
+    }
 }

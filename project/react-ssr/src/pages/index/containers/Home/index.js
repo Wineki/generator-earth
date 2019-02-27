@@ -1,7 +1,7 @@
 import React from 'react'
 import HomeLogo from '../../components/HomeLogo'
 
-const Home = ({initialData}) => {
+const Home = () => {
 
     return (
 
@@ -9,10 +9,6 @@ const Home = ({initialData}) => {
 
             <HomeLogo />
             {`hello world im HomePage`}
-
-            <br/>
-
-            {`server initialData${JSON.stringify(initialData)}`}
 
         </div>
 

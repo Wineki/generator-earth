@@ -5,6 +5,7 @@ module.exports = {
     tools: path.resolve('src/tools/'),
     api: path.resolve('src/api/'),
     config: path.resolve('src/config'),
+    pages: path.resolve('src/page'),
     public: path.resolve('public/'),
     scss: path.resolve('src/scss_mixin/scss/'),
     scss_mixin: path.resolve('src/scss_mixin/'),

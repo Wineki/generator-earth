@@ -1,28 +1,38 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import {
     Route,
-    Switch
+    Switch,
 } from 'react-router-dom'
 
-import Loading from 'lm-loading'
 
-import request from 'api/request'
-
-// bundleLoader
-import Loadable from 'react-loadable'
-
+import { fetchListData } from '../../actions/list'
 
 import List from './list'
-
-const Detail  = Loadable({
-    loader: () => import('../../../index/containers/Site/detail' /* webpackChunkName:"site_detail" */),
-    loading() {
-        return <Loading isShow={true}/>
-    }
-});
-
+import request from 'api/request'
 
 class Site extends Component {
+
+    static async getInitialProps(ctx) {
+
+        // 由于项目中用了redux-thunk，不是promise形式，无法在fetch后拿到数据
+        // 这里直接请求，然后放到store里
+        const data = await Promise.all(
+            [
+            request.post('/api/test/listDate', {
+                id: 1,
+                age: 20
+            })
+            ]
+        );
+
+
+        ctx.reduxStore.dispatch({
+            type: 'FETACH_LIST_DATA',
+            data: data[0]
+        });
+    }
 
 
     constructor (props) {
@@ -30,84 +40,77 @@ class Site extends Component {
         super(props);
         this.state = {
 
-            listData: [],
-            loadingShow: false
+            listData: []
 
         };
-
-
-        this._isMounted = false;
-        this.loadingChangeHandle = this.loadingChangeHandle.bind(this);
 
     }
 
     componentDidMount () {
 
-        this._isMounted = true;
-
-        const { listData } = this.state;
+        const { listData } = this.props;
 
         if (listData.length > 0) return;
 
-        this.fetchListData();
+        this.props.fetchListData();
 
     }
 
-    componentWillUnmount () {
-
-        this._isMounted = false;
-
-        console.log('dont forget clear timer or remove listener');
-
-    }
-
-    loadingChangeHandle (showState) {
-
-        this.setState({
-            loadingShow: showState
-        });
-
-    }
-
-    fetchListData () {
-
-        this.loadingChangeHandle(true);
-
-        request.post('/api/test/aaa', {})
-            .then((data) => {
-
-                this.loadingChangeHandle(false);
-
-                this._isMounted && this.setState({ listData: data.data })
-
-            })
-
-    }
 
 
     render () {
 
         const { match } = this.props;
-        const { listData, loadingShow } = this.state;
+        const { listData } = this.props;
 
+        // return cloneChildren
         return (
-            <div>
-                <Switch>
-                    <Route exact path={`${match.path}`} render={routeProps => {
-                        return <List listData={listData} />
-                    }}/>
-                    <Route
-                        path={`${match.path}/:id`}
-                        component={ Detail }
-                    />
-                </Switch>
-                <Loading isShow={loadingShow} />
-            </div>
+            <Switch>
+                {
+                    this.props.routeConfig.map((route, i) => {
+                        if (route.path === '/site') {
+                            return (
+                                <Route
+                                    path={route.path}
+                                    exact={route.exact}
+                                    render={routeProps => <List listData={listData} {...routeProps}/>}
+                                    key={i}
+                                />
+                            )
+                        }
 
+                        return (
+                            <Route
+                                path={route.path}
+                                exact={route.exact}
+                                component={route.component}
+                                key={i}
+                            />
+                        )
+                    })
+                }
+
+            </Switch>
         )
 
     }
 
 }
 
-export default Site
+const mapStateToProps = (state) => {
+
+    return {
+        listData: state.listData
+    }
+
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+
+    return {
+        fetchListData: (...args) => dispatch(fetchListData(...args)),
+    }
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Site)

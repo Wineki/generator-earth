@@ -12,6 +12,10 @@ const Detail = ({match, location}) => {
 
     )
 
-}
+};
+
+Detail.getInitialProps = () => {
+    return 'detail data'
+};
 
 export default Detail
