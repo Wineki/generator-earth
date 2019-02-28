@@ -7,7 +7,7 @@ import { StaticRouter } from 'react-router-dom'
 
 
 import App from './containers/App'
-import routeConfig from './containers/routeConfig';
+import routeConfig from './routeConfig';
 
 
 // only for ssr
@@ -20,20 +20,18 @@ class AppSSR extends Component {
      * @param ctx
      * @return {Promise<*>}
      */
-    static async getInitialProps(ctx) {
+    static async getInitialStore(ctx) {
 
         ctx.reduxStore = createStore(reducers, storeMiddleWare);
         // fetch or something
         // return出的数据可以在render中的this.props中拿到
-        // todo: server在这里请求数据
-        // 在这里拿到server的数据
-        return {
-            a: 123
-        }
+
     }
 
     // 如果需要在路由组件中获取数据，需要传递routeConfig
     static routeConfig = routeConfig;
+    // 如果App的初始数据是通过getInitialProps获取的，则需要传递App
+    static App = App;
 
 
 
@@ -41,25 +39,22 @@ class AppSSR extends Component {
 
 
         const {
-            // basename,
+            basename,
             location,
             context
         } = this.props;
 
-        const { initialData, store } = this.props;
+        const { store } = this.props;
 
         return (
 
             <Provider store={store}>
                 <StaticRouter
-                    basename='/index'
+                    basename={basename}
                     location={location}
                     context={context}
                 >
-                    <App
-                        initialData = {initialData}
-                        routeConfig = {routeConfig}
-                    />
+                    <App routeConfig = {routeConfig}/>
                 </StaticRouter>
             </Provider>
 

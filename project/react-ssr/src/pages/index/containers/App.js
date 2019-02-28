@@ -5,9 +5,9 @@ import MainRouter from './MainRouter'
 import MainApp from './MainApp'
 
 import FooterBar from 'commons/FooterBar'
+import Wrapper from 'react-ssr-with-koa/dist/WrapperForContainer'
 
 class App extends Component {
-
 
     componentDidMount () {
 
@@ -25,12 +25,12 @@ class App extends Component {
     render () {
 
 
-        const {routeConfig} = this.props;
+        const {routeConfig, initialData} = this.props;
 
         return (
 
             <div>
-                {JSON.stringify(this.props.initialData)}
+                {JSON.stringify(initialData)}
                 <MainApp/>
                 <FooterBar/>
                 <MainRouter routeConfig={routeConfig}/>
@@ -43,5 +43,14 @@ class App extends Component {
 
 }
 
+const Comp = Wrapper({type: 'app'})(App);
 
-export default App;
+Comp.getInitialProps = async (ctx) => {
+
+    return {
+        AppWithServerData: '123'
+    }
+}
+
+
+export default Comp;

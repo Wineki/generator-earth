@@ -1,6 +1,6 @@
 import React from 'react'
 import './index.scss'
-import Wrapper from './Wrapper'
+import Wrapper from 'react-ssr-with-koa/dist/WrapperForContainer'
 
 class My extends React.Component {
 
@@ -38,10 +38,11 @@ class My extends React.Component {
     }
 }
 
-const Comp = Wrapper({name: 'My'})(My);
+const Comp = Wrapper({name: 'My', type: 'route'})(My);
 
 Comp.getInitialProps = () => {
-    return 'my data'
+    // todo: server在这里请求数据
+    return 'my data from server'
 };
 
 Comp.displayName = 'My';
