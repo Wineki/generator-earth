@@ -9,6 +9,12 @@ import Wrapper from 'react-ssr-with-koa/dist/WrapperForContainer'
 
 class App extends Component {
 
+    static async getInitialProps(ctx) {
+        return {
+            AppWithServerData: '123'
+        }
+    }
+
     componentDidMount () {
 
         console.log('in this stage you can setState safe');
@@ -43,14 +49,4 @@ class App extends Component {
 
 }
 
-const Comp = Wrapper({type: 'app'})(App);
-
-Comp.getInitialProps = async (ctx) => {
-
-    return {
-        AppWithServerData: '123'
-    }
-}
-
-
-export default Comp;
+export default Wrapper({type: 'app'})(App);
