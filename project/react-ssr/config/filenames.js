@@ -3,7 +3,7 @@ module.exports = {
     dev: {
         js: 'static/js/[name].js',
         jsChunk: 'static/js/[name].chunk.js',
-        css: '', // 在<style>中，无需配置
+        css: 'static/css/[name].css',
         img: 'static/img/[name].[hash:8].[ext]',
         media: 'static/media/[name].[hash:8].[ext]'
     },
