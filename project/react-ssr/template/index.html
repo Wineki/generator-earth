@@ -1,6 +1,4 @@
-module.exports = (stringMarkup, preloadState, options, ctx) => {
-    return `
-    <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -13,19 +11,12 @@ module.exports = (stringMarkup, preloadState, options, ctx) => {
     <script>
         window.PointerEvent = void 0
     </script>
-    <script>
-        ${options.flexibleStr}
-    </script>
-    ${options.css}
-    ${preloadState}
+    <%- css %>
+    <%- preloadState %>
 </head>
 <body>
-<div>dddd</div>
-<div id="root">${stringMarkup}</div>
-<script type="text/javascript" src="//j1.58cdn.com.cn/js/login/passportMobileLogin.js"></script>
-${options.js}
+<div id="root"><%- stringMarkup %></div>
+<!--<script type="text/javascript" src="//j1.58cdn.com.cn/js/login/passportMobileLogin.js"></script>-->
+<%- js %>
 </body>
 </html>
-    
-    `
-}
