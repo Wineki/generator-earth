@@ -68,7 +68,7 @@ export default class extends BaseContainer {
                     <Button type="primary" style={{marginTop: '12px'}}>新增</Button>
                 </Link>
                 <F {...this.state.formData} submitForm={this.submitForm} />
-                <T {...this.state.tableData} {...this.props} />
+                <T {...this.state.tableData} />
             </section>
         )
     }

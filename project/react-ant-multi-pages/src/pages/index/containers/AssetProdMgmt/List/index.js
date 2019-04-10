@@ -42,7 +42,7 @@ export default funcContainerHOC( function Container(props, context) {
                 <Button type="primary" style={{marginTop: '12px'}}>新增</Button>
             </Link>
             <ListForm />
-            <ListTable {...props} />
+            <ListTable />
         </section>
     )
 } )

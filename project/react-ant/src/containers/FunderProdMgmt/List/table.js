@@ -13,8 +13,6 @@ export default class extends BaseContainer {
     
     getColumns() {
         
-        console.log(this.context)
-        
         return this._columns = this._columns || [{
                 title: '资产方编号',
                 dataIndex: 'assetCode',
