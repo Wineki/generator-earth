@@ -9,7 +9,6 @@ import './App.scss'
 
 import Home from 'ROOT_SOURCE/containers/Home/'
 import TransactionQuery from 'ROOT_SOURCE/containers/TransactionQuery/'
-import Reconciliation from 'ROOT_SOURCE/containers/Reconciliation/'
 
 
 //1
@@ -86,53 +85,49 @@ class App extends Component {
                     <div className="logo">金融</div>
                     <Menu theme="dark"
                         defaultSelectedKeys={['/']}
-                        defaultOpenKeys={['/Asset','/Funder']}                     
+                        defaultOpenKeys={['/menu1','/menu2']}                     
                         mode="inline"
                         selectedKeys={[prefixPath]}
                         >
+                        
                         <Item key="/">
                             <Icon type="book" />
                             <span>首页</span>
                             <Link to="/"></Link>
                         </Item>
                         
-                        <SubMenu key="/Asset" title={<span><Icon type="book"/>资产方</span>}>
+                        <Item key="/TransactionQuery">
+                            <Icon type="book"/>
+                            <span>空页面</span>
+                            <Link to="/TransactionQuery"></Link>
+                        </Item>
+                        
+                        <SubMenu key="/menu1" title={<span><Icon type="book"/>使用框架</span>}>
                             <Item key="/AssetMgmt">
-                                <span>资产方管理</span>
+                                <span>完全使用框架(推荐)</span>
                                 <Link to="/AssetMgmt"></Link>
                             </Item>
                             <Item key="/AssetProdMgmt">
-                                <span>产品管理</span>
+                                <span>部分使用框架1(推荐)</span>
                                 <Link to="/AssetProdMgmt"></Link>
                             </Item>
                             <Item key="/FundChannelCfg">
-                                <span>资金通道配置</span>
+                                <span>部分使用框架2</span>
                                 <Link to="/FundChannelCfg"></Link>
+                            </Item>
+                            <Item key="/FunderMgmt">
+                                <span>部分使用框架3</span>
+                                <Link to="/FunderMgmt"></Link>
                             </Item>
                         </SubMenu>
                         
-                        <SubMenu key="/Funder" title={<span><Icon type="book"/>资金方</span>}>
-                            <Item key="/FunderMgmt">
-                                <span>资金方管理</span>
-                                <Link to="/FunderMgmt"></Link>
-                            </Item>
+                        <SubMenu key="/menu2" title={<span><Icon type="book"/>完全不使用框架</span>}>
                             <Item key="/FunderProdMgmt">
-                                <span>产品管理</span>
+                                <span>不使用redux</span>
                                 <Link to="/FunderProdMgmt"></Link>
                             </Item>
                         </SubMenu>
                         
-                        <Item key="/TransactionQuery">
-                            <Icon type="book"/>
-                            <span>交易查询</span>
-                            <Link to="/TransactionQuery"></Link>
-                        </Item>
-                        
-                        <Item key="/Reconciliation">
-                            <Icon type="book"/>
-                            <span>对账管理</span>
-                            <Link to="/Reconciliation"></Link>
-                        </Item>
                     </Menu>
                 </Sider>
                 
@@ -160,8 +155,6 @@ class App extends Component {
                             
                             {/* 交易查询 */}
                             <Route path="/TransactionQuery" component={TransactionQuery}/>
-                            {/* 对账管理 */}
-                            <Route path="/Reconciliation" component={Reconciliation}/>
                             
                         </Switch>
                     </Content>

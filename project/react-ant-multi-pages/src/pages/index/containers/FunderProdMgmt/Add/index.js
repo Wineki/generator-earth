@@ -1,131 +1,100 @@
-/**
- * created by Sherry Zhang on 2018-4-26
- */
-
 import React from 'react'
-import { Form, Button, Input, Select } from 'antd'
-import BaseFormContainer from "ROOT_SOURCE/base/BaseFormContainer";
+import moment from 'moment'
+import { DatePicker, Button, Form, Input, Col } from 'antd'
+
+import BaseContainer from 'ROOT_SOURCE/base/BaseContainer'
+
 import request from 'ROOT_SOURCE/utils/request'
-import { sleep } from 'ROOT_SOURCE/utils/index'
-import * as actions from './actions';
-import * as reducers from './reducers';
-import combineContainer from  'ROOT_SOURCE/base/CompConjunction'
+import { mapMoment } from 'ROOT_SOURCE/utils/fieldFormatter'
+import Rules from 'ROOT_SOURCE/utils/validateRules'
 
-const FormItem = Form.Item;
-const Option = Select.Option;
+const FormItem = Form.Item
 
 
-const PAY_METHOD_MAP = [
-    {
-        "id": "1",
-        "item": "到期还本付息"
-    }, {
-        "id": "2",
-        "item": "等额本息"
-    }, {
-        "id": "3",
-        "item": "等额本金"
-    }, {
-        "id": "4",
-        "item": "按月付息，到期还本"
-    }
-];
-
-class addForm extends BaseFormContainer {
-    componentDidMount(){
-        if(this.props.funderNames.length === 0) {
-            //拉取下拉列表的数据
-            this.props.getFunderNames && this.props.getFunderNames();
-        }
-    }
-
+export default Form.create()(class extends BaseContainer {
+    
+    /**
+     * 提交表单
+     */
     submitForm = (e) => {
-
-        e && e.preventDefault();
-
-        const { form } = this.props;
-
+        
+        e && e.preventDefault()
+        
+        const { form } = this.props
+        
         form.validateFieldsAndScroll(async (err, values) => {
             if (err) {
                 return;
             }
-
+            
             // 提交表单最好新一个事务，不受其他事务影响
-            await sleep(0)
-
+            await this.sleep()
+            
             let _formData = { ...form.getFieldsValue() }
-
+            
+            // _formData里的一些值需要适配
+            _formData = mapMoment(_formData, 'YYYY-MM-DD HH:mm:ss')
+            
             // action
-            await request.post('/funder/addFunderPrd', _formData)
-
+            await request.post('/asset/addAsset', _formData)
+                
             // 提交后返回list页
-            this.props.history.push('/FunderProdMgmt/list')
+            this.props.history.push(`${this.context.CONTAINER_ROUTE_PREFIX}/list`)
         })
-    };
-
-    render(){
-        let { getFieldDecorator } = this.props.form;
-
-        return(
-            this.wrapItems(
-                <div>
-                    <FormItem label={('资金方名称')}>
-                        {
-                            getFieldDecorator('funderName',{
-                                rules: [{ required: true }]
-                            })(
-                                <Select style={{ width: 160 }}>
-                                    {this.props.funderNames.map( obj =>
-                                        <Option value={obj.id} key={obj.id}>{obj.item}</Option>
-                                    )}
-                                </Select>
-                            )
-                        }
-                    </FormItem>
-                    <FormItem label={('资金方产品')}>
-                        {getFieldDecorator('funderPrd', {
+    }
+    
+    
+    
+    render() {
+        
+        let { form } = this.props
+        let { getFieldDecorator } = form
+        
+        return (
+            <div className="ui-background">
+                <Form layout="inline" onSubmit={this.submitForm}>
+                    
+                    <FormItem label="资产方名称">
+                        {getFieldDecorator('assetName', {
                             rules: [{ required: true }]
-                        })(<Input />)}
+                        })(<Input/>)}
                     </FormItem>
-                    <FormItem label={('单笔放款限额')}>
-                        {getFieldDecorator('singleLimit')(<Input />)}
-                    </FormItem>
-                    <FormItem label={('日限额')}>
-                        {getFieldDecorator('dateLimit')(<Input />)}
-                    </FormItem>
-                    <FormItem label={('资金产品额度')}>
-                        {getFieldDecorator('funderLimit')(<Input />)}
-                    </FormItem>
-                    <FormItem label={('费率')}>
-                        {getFieldDecorator('rate', {
+                    
+                    <FormItem label="签约主体">
+                        {getFieldDecorator('contract', {
                             rules: [{ required: true }]
-                        })(<Input />)}
+                        })(<Input/>)}
                     </FormItem>
-                    <FormItem label={('还款方式')}>
-                        {
-                            getFieldDecorator('payMtd',{
-                                rules: [{ required: true }]
-                            })(
-                                <Select style={{ width: 160 }}>
-                                    {PAY_METHOD_MAP.map( obj =>
-                                        <Option value={obj.id} key={obj.id}>{obj.item}</Option>
-                                    )}
-                                </Select>
-                            )
-                        }
+                    
+                    <FormItem label="签约时间">
+                        {getFieldDecorator('contractDate', {
+                            rules: [{ type: 'object', required: true }]
+                        })(<DatePicker showTime format='YYYY年MM月DD HH:mm:ss' style={{ width: '100%' }}/>)}
                     </FormItem>
-                    <FormItem label={('备注')}>
-                        {getFieldDecorator('remarks')(<Input />)}
+                    
+                    <FormItem label="联系人">
+                        {getFieldDecorator('contacts')(<Input/>)}
                     </FormItem>
+                    
+                    <FormItem label="联系电话" hasFeedback>
+                        {getFieldDecorator('contactsPhone', {
+                            rules: [{ pattern: Rules.phone, message: '无效' }]
+                        })(<Input maxLength="11"/>)}
+                    </FormItem>
+                    
                     <FormItem>
                         <Button type="primary" htmlType="submit"> 提交 </Button>
                     </FormItem>
-                </div>
-            )
-        );
+                    
+                    <FormItem>
+                        <Button type="primary" onClick={e => window.history.back()}> 取消/返回 </Button>
+                    </FormItem>
+                
+                </Form>
+            </div>
+        
+        )
+        
     }
-}
+})
 
-let connectedAddForm = combineContainer(addForm).withReducers(reducers).withActions(actions).val();
-
-export default Form.create()(connectedAddForm);

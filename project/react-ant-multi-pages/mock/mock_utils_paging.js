@@ -16,10 +16,13 @@ const sliceList = (arr, currentPage, pageSize) => {
 
 module.exports = function paging(whole_response_json, params) {
     
+    let all = whole_response_json[RESPONSE_DESTRUST_KEY][RESPONSE_LIST_DESTRUST_KEY];
+    
+    // 无paging配置 则默认取全部
     whole_response_json[RESPONSE_DESTRUST_KEY][RESPONSE_LIST_DESTRUST_KEY] = sliceList(
-        whole_response_json[RESPONSE_DESTRUST_KEY][RESPONSE_LIST_DESTRUST_KEY],
-        params[CURRENT_PAGE],
-        params[PAGE_SIZE]
+        all,
+        params[CURRENT_PAGE]||1,
+        params[PAGE_SIZE]||all.length
     )
     
     return whole_response_json

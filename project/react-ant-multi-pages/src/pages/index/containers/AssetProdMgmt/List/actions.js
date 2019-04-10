@@ -10,13 +10,14 @@ export const LIST__UPDATE_TABLE_DATA
 
 
 
-export const updateTable = ActionFactory.createUpdateTable({
+const updateTable = ActionFactory.createUpdateTable({
     
-    url: '/asset/getAssetPrd',
+    url: '/asset/getAsset',
     
     type: 'post',
     
     handler: (dispatch, getState, formData, resultBody) => {
+        
         // 更新formData
         dispatch({
             type: LIST__UPDATE_FORM_DATA,
@@ -25,6 +26,7 @@ export const updateTable = ActionFactory.createUpdateTable({
                 total: resultBody.total,
             }
         })
+        
         // 更新tableData
         dispatch({
             type: LIST__UPDATE_TABLE_DATA,
@@ -32,7 +34,14 @@ export const updateTable = ActionFactory.createUpdateTable({
                 dataSource: resultBody.list,
             }
         })
+        
+        return resultBody
     },
     
 })
 
+
+
+export default {
+    updateTable,
+}

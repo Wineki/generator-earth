@@ -2,14 +2,6 @@ import request from 'ROOT_SOURCE/utils/request'
 import { CURRENT_PAGE, PAGE_SIZE, RESPONSE_DESTRUST_KEY } from './BaseConfig'
 
 /**
- * author: jiajianrong
- * reducerFactory：创建普通actionCreator
- */
-
-
-
-
-/**
  * 创建普通http request 的actionCreator
  * 
  * @param {String} url
@@ -50,21 +42,25 @@ function createUpdateTable({
     type='get',
     handler=()=>{},
 }) {
-    return function (/*formData|pagination*/options={}) {
+    return function (/*formData|pagination*/formData={}) {
         return async (dispatch, getState) => {
             
             // 初始化antd-table-pagination
-            let formData = Object.assign(
+            let _formData = Object.assign(
                 {[PAGE_SIZE]: 10, [CURRENT_PAGE]: 1},
-                options,
+                formData,
             )
             
             // 请求server数据
-            let result = await request[type](url, formData)
+            let result = await request[type](url, _formData)
             
             if (!result) { return; }
             
-            return handler(dispatch, getState, formData, result[RESPONSE_DESTRUST_KEY])
+            let resultBody = result[RESPONSE_DESTRUST_KEY]
+            
+            if (!resultBody) { return; }
+            
+            return handler(dispatch, getState, _formData, result[RESPONSE_DESTRUST_KEY])
         }
     }
 }

@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import { Form, Button } from 'antd'
 import { Link } from 'react-router-dom'
 
+import { funcContainerHOC } from 'ROOT_SOURCE/base/BaseContainer'
 import combineContainer from  'ROOT_SOURCE/base/CompConjunction'
 
 import F from './form'
 import T from './table'
 
-import * as actions from './actions'
-import * as reducers from './reducers'
+import actions from './actions'
+import reducers from './reducers'
 
 
 
@@ -17,16 +18,31 @@ let ListForm = combineContainer(F).withReducers(reducers).withActions(actions).v
 ListForm = Form.create()(ListForm)
 
 
-export default class extends Component {
-    render () {
-        return (
-            <section>
-                <Link to="/AssetProdMgmt/add">
-                    <Button type="primary" style={{marginTop: '12px'}}>新增</Button>
-                </Link>
-                <ListForm />
-                <ListTable />
-            </section>
-        )
-    }
-}
+export default funcContainerHOC( function Container(props, context) {
+    
+    return (
+        <section>
+            <p>复杂table操作时(如包含多选，排序等)，使用自定义Table</p>
+            <table>
+                <tr>
+                    <td style={{border: '1px solid blue'}}>ActionFactory</td>
+                    <td style={{border: '1px solid blue'}}>&#x2713;</td>
+                </tr>
+                <tr>
+                    <td style={{border: '1px solid blue'}}>ReducerFactory</td>
+                    <td style={{border: '1px solid blue'}}>&#x2713;</td>
+                </tr>
+                <tr>
+                    <td style={{border: '1px solid blue'}}>BaseTableContainer</td>
+                    <td style={{border: '1px solid blue'}}>&#x2717;</td>
+                </tr>
+            </table>
+            
+            <Link to={`${context.CONTAINER_ROUTE_PREFIX}/add`}>
+                <Button type="primary" style={{marginTop: '12px'}}>新增</Button>
+            </Link>
+            <ListForm />
+            <ListTable {...props} />
+        </section>
+    )
+} )

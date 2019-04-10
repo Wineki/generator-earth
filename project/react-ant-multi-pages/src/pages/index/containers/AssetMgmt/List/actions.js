@@ -10,7 +10,7 @@ export const LIST__UPDATE_TABLE_DATA
 
 
 
-export const updateTable = ActionFactory.createUpdateTable({
+const updateTable = ActionFactory.createUpdateTable({
     
     url: '/asset/getAsset',
     
@@ -40,3 +40,8 @@ export const updateTable = ActionFactory.createUpdateTable({
     
 })
 
+
+
+export default {
+    updateTable,
+}

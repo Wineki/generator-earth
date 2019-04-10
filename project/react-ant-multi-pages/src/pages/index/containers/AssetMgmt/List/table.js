@@ -6,7 +6,6 @@ import BaseTableContainer from 'ROOT_SOURCE/base/BaseTableContainer'
 
 export default class extends BaseTableContainer {
     
-    
     getColumns() {
 
         return this._columns = this._columns || [{
@@ -45,10 +44,11 @@ export default class extends BaseTableContainer {
                 title: '操作',
                 key: 'action',
                 render: (text, record) => (
-                    <Link to={`/AssetMgmt/item/${record.id}`}>查看/修改</Link>
+                    <Link to={`${this.context.CONTAINER_ROUTE_PREFIX}/item/${record.id}`}>查看/修改</Link>
                 )
             }]
     }
+    
 
 }
 
