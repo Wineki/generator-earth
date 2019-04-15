@@ -1,5 +1,5 @@
 import request from 'ROOT_SOURCE/utils/request'
-import { CURRENT_PAGE, PAGE_SIZE, RESPONSE_DESTRUST_KEY } from 'ROOT_SOURCE/base/BaseConfig'
+import { CURRENT_PAGE, PAGE_SIZE, TOTAL, RESPONSE_DESTRUST_KEY, RESPONSE_LIST_DESTRUST_KEY } from 'ROOT_SOURCE/base/BaseConfig'
 import { MOD_PREFIX } from '../constants'
 
 
@@ -36,7 +36,7 @@ const updateTable = function (/*formData|pagination*/formData={}) {
             type: LIST__UPDATE_FORM_DATA,
             payload: {
                 ..._formData,
-                total: resultBody.total,
+                [TOTAL]: resultBody[TOTAL],
             }
         })
         
@@ -44,7 +44,7 @@ const updateTable = function (/*formData|pagination*/formData={}) {
         dispatch({
             type: LIST__UPDATE_TABLE_DATA,
             payload: {
-                dataSource: resultBody.list,
+                dataSource: resultBody[RESPONSE_LIST_DESTRUST_KEY],
             }
         })
         

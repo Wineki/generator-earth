@@ -7,7 +7,7 @@ import T from './table'
 
 import BaseContainer from 'ROOT_SOURCE/base/BaseContainer'
 import request from 'ROOT_SOURCE/utils/request'
-import { CURRENT_PAGE, PAGE_SIZE, RESPONSE_DESTRUST_KEY } from 'ROOT_SOURCE/base/BaseConfig'
+import { CURRENT_PAGE, PAGE_SIZE, RESPONSE_DESTRUST_KEY, RESPONSE_LIST_DESTRUST_KEY } from 'ROOT_SOURCE/base/BaseConfig'
 
 import { mapMoment } from 'ROOT_SOURCE/utils/fieldFormatter'
 
@@ -49,7 +49,7 @@ export default class extends BaseContainer {
         // 更新table
         this.setState({
             tableData: {
-                dataSource: resultBody.list,
+                dataSource: resultBody[RESPONSE_LIST_DESTRUST_KEY],
             },
         })
     }

@@ -7,3 +7,4 @@ export const TOTAL = projGlobalConfig.TOTAL
 
 
 export const RESPONSE_DESTRUST_KEY = projGlobalConfig.RESPONSE_DESTRUST_KEY
+export const RESPONSE_LIST_DESTRUST_KEY = projGlobalConfig.RESPONSE_LIST_DESTRUST_KEY

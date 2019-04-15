@@ -1,3 +1,4 @@
+import { CURRENT_PAGE, PAGE_SIZE, TOTAL, RESPONSE_DESTRUST_KEY, RESPONSE_LIST_DESTRUST_KEY } from 'ROOT_SOURCE/base/BaseConfig'
 import ActionFactory from 'ROOT_SOURCE/base/ActionFactory'
 import { MOD_PREFIX } from '../constants'
 
@@ -23,7 +24,7 @@ const updateTable = ActionFactory.createUpdateTable({
             type: LIST__UPDATE_FORM_DATA,
             payload: {
                 ...formData,
-                total: resultBody.total,
+                [TOTAL]: resultBody[TOTAL],
             }
         })
         
@@ -31,7 +32,7 @@ const updateTable = ActionFactory.createUpdateTable({
         dispatch({
             type: LIST__UPDATE_TABLE_DATA,
             payload: {
-                dataSource: resultBody.list,
+                dataSource: resultBody[RESPONSE_LIST_DESTRUST_KEY],
             }
         })
         
