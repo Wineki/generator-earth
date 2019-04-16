@@ -29,7 +29,7 @@ export default class extends BaseContainer {
         let _formData = { ...this.props.form.getFieldsValue() }
             
         // _formData里的一些值需要适配
-        mapMoment(_formData, 'YYYY-MM-DD HH:mm:ss')
+        _formData = mapMoment(_formData, 'YYYY-MM-DD HH:mm:ss')
             
         // action
         this.props.updateTable && this.props.updateTable(_formData)
