@@ -1,6 +1,33 @@
 import request from 'ROOT_SOURCE/utils/request'
 import { CURRENT_PAGE, PAGE_SIZE, RESPONSE_DESTRUST_KEY } from './BaseConfig'
 
+
+/**
+ * restful 接口中，有时参数会被写在url里，需要动态替换
+ * @param {Object} url
+ * @param {Object} options
+ * 
+ * return newUrl
+ */
+function replaceUrlPartitionsIfNeeded(url, options) {
+    //url should NOT be changed
+    let newUrl = url
+        
+    // in case params in url, e.g, /api/{recordId}
+    if (options.__urlPartitions) {
+        
+        for ( let partition in options.__urlPartitions ) {
+            let rg = new RegExp( '{'+partition+'}' )
+            newUrl = newUrl.replace(rg, ''+options.__urlPartitions[partition])
+        }
+        
+        delete options.__urlPartitions
+    }
+    
+    return newUrl
+}
+
+
 /**
  * 创建普通http request 的actionCreator
  * 
@@ -15,10 +42,13 @@ function createRequest({
     handler=()=>{},
 }) {
     return function (options={}) {
+        
+        let newUrl = replaceUrlPartitionsIfNeeded(url, options)
+        
         return async (dispatch, getState) => {
             
             // 请求server数据
-            let result = await request[type](url, options)
+            let result = await request[type](newUrl, options)
             
             if (!result) { return; }
             
@@ -43,6 +73,9 @@ function createUpdateTable({
     handler=()=>{},
 }) {
     return function (/*formData|pagination*/formData={}) {
+        
+        let newUrl = replaceUrlPartitionsIfNeeded(url, formData)
+        
         return async (dispatch, getState) => {
             
             // 初始化antd-table-pagination
@@ -52,7 +85,7 @@ function createUpdateTable({
             )
             
             // 请求server数据
-            let result = await request[type](url, _formData)
+            let result = await request[type](newUrl, _formData)
             
             if (!result) { return; }
             

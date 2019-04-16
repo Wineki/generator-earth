@@ -54,12 +54,56 @@ export default {
             return err
         })
     },
+    delete: function(url, params, headers) {
+        if (params && JSON.stringify(params)!=='{}') {
+            url += '?' + stringifyParams(params)
+        }
+        
+        startLoadingAnimation()
+        
+        return fetch(url, {
+            method: "delete",
+            headers: Object.assign( {}, DEFAULT_HEADERS, {'referer-url': window.location.href}, headers ),
+            credentials: 'include'
+        })
+        .then(checkStatus)
+        .then((response) => response.json())
+        .then((res) => {
+            stopLoadingAnimation()
+            return res
+        })
+        .catch(err => {
+            stopLoadingAnimation()
+            return err
+        })
+    },
     post: function(url, params, headers) {
         
         startLoadingAnimation()
         
         return fetch(url, {
             method: "post",
+            headers: Object.assign( {}, DEFAULT_HEADERS, {'referer-url': window.location.href}, headers ),
+            credentials: 'include',
+            body: isPostTypeJson() ? JSON.stringify(params) : stringifyParams(params)
+        })
+        .then(checkStatus)
+        .then((response) => response.json())
+        .then((res) => {
+            stopLoadingAnimation()
+            return res
+        })
+        .catch(err => {
+            stopLoadingAnimation()
+            return err
+        })
+    },
+    put: function(url, params, headers) {
+        
+        startLoadingAnimation()
+        
+        return fetch(url, {
+            method: "put",
             headers: Object.assign( {}, DEFAULT_HEADERS, {'referer-url': window.location.href}, headers ),
             credentials: 'include',
             body: isPostTypeJson() ? JSON.stringify(params) : stringifyParams(params)
