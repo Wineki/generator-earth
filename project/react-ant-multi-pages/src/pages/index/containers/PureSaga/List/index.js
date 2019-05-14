@@ -10,11 +10,12 @@ import T from './table'
 
 import actions from './actions'
 import reducers from './reducers'
+import sagas from './sagas'
 
 
 
-let ListTable = combineContainer(T).withReducers(reducers).withActions(actions).val()
-let ListForm = combineContainer(F).withReducers(reducers).withActions(actions).val()
+let ListTable = combineContainer(T).withReducers(reducers).withSagas(sagas).withActions(actions).val()
+let ListForm = combineContainer(F).withReducers(reducers).withSagas(sagas).withActions(actions).val()
 ListForm = Form.create()(ListForm)
 
 
@@ -25,15 +26,15 @@ export default funcContainerHOC( function Container(props, context) {
             <table>
                 <tr>
                     <td style={{border: '1px solid blue'}}>ActionFactory</td>
-                    <td style={{border: '1px solid blue'}}>&#x2713;</td>
+                    <td style={{border: '1px solid blue'}}>&#x2717;</td>
                 </tr>
                 <tr>
                     <td style={{border: '1px solid blue'}}>ReducerFactory</td>
-                    <td style={{border: '1px solid blue'}}>&#x2713;</td>
+                    <td style={{border: '1px solid blue'}}>&#x2717;</td>
                 </tr>
                 <tr>
                     <td style={{border: '1px solid blue'}}>BaseTableContainer</td>
-                    <td style={{border: '1px solid blue'}}>&#x2713;</td>
+                    <td style={{border: '1px solid blue'}}>&#x2717;</td>
                 </tr>
             </table>
             

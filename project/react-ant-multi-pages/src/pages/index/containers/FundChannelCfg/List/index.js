@@ -40,7 +40,7 @@ export default funcContainerHOC( function Container(props, context) {
             <Link to={`${context.CONTAINER_ROUTE_PREFIX}/add`}>
                 <Button type="primary" style={{marginTop: '12px'}}>新增</Button>
             </Link>
-            <ListForm />
+            <ListForm {...props} />
             <ListTable />
         </section>
     )

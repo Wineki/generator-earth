@@ -43,9 +43,9 @@ export default class extends BaseContainer {
             // _formData里的一些值需要适配
             _formData = mapMoment(_formData, 'YYYY-MM-DD HH:mm:ss')
         }
-            
+        
         // action
-        this.props.updateTable && this.props.updateTable(_formData)
+        this.props.submitFormAsync && this.props.submitFormAsync(_formData)
     }
     
     

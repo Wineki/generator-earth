@@ -14,11 +14,19 @@ const FormItem = Form.Item
 
 export default class extends BaseContainer {
     
+    
+    componentDidMount() {
+        if (this.props.history.action === 'PUSH') {
+            this.submitForm(null, true)
+        }
+    }
+    
+    
     /**
      * 提交表单
      */
-    submitForm = async (e) => {
-        e && e.preventDefault()
+    submitForm = async (e, useFormDataInStore) => {
+        e && e.preventDefault && e.preventDefault()
         
         // 重置table
         this.props.resetTable && this.props.resetTable()
@@ -26,10 +34,15 @@ export default class extends BaseContainer {
         // 提交表单最好新一个事务，不受其他事务影响
         await this.sleep()
         
-        let _formData = { ...this.props.form.getFieldsValue() }
-            
-        // _formData里的一些值需要适配
-        _formData = mapMoment(_formData, 'YYYY-MM-DD HH:mm:ss')
+        let _formData;
+        
+        if (useFormDataInStore) {
+            _formData = this.props.formData
+        } else {
+            _formData = { ...this.props.form.getFieldsValue() }
+            // _formData里的一些值需要适配
+            _formData = mapMoment(_formData, 'YYYY-MM-DD HH:mm:ss')
+        }
             
         // action
         this.props.updateTable && this.props.updateTable(_formData)

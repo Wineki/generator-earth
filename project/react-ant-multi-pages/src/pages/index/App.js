@@ -56,6 +56,15 @@ const FunderProdMgmt = Loadable({
 });
 
 
+//6
+const PureSaga = Loadable({
+    loader: () => import('./containers/PureSaga/' /* webpackChunkName:"PureSaga" */),
+    loading() {
+        return null;
+    }
+});
+
+
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu, Item } = Menu;
@@ -85,7 +94,7 @@ class App extends Component {
                     <div className="logo">金融</div>
                     <Menu theme="dark"
                         defaultSelectedKeys={['/']}
-                        defaultOpenKeys={['/menu1','/menu2']}                     
+                        defaultOpenKeys={['/menu1','/menu2','/menu3']}                     
                         mode="inline"
                         selectedKeys={[prefixPath]}
                         >
@@ -128,6 +137,13 @@ class App extends Component {
                             </Item>
                         </SubMenu>
                         
+                        <SubMenu key="/menu3" title={<span><Icon type="book"/>完全使用Saga</span>}>
+                            <Item key="/PureSaga">
+                                <span>完全使用Saga</span>
+                                <Link to="/PureSaga"></Link>
+                            </Item>
+                        </SubMenu>
+                        
                     </Menu>
                 </Sider>
                 
@@ -152,6 +168,9 @@ class App extends Component {
                             <Route path="/FunderMgmt" component={FunderMgmt}/>
                             {/* 产品管理 */}
                             <Route path="/FunderProdMgmt" component={FunderProdMgmt}/>
+                            
+                            {/* PureSaga */}
+                            <Route path="/PureSaga" component={PureSaga}/>
                             
                             {/* 交易查询 */}
                             <Route path="/TransactionQuery" component={TransactionQuery}/>
