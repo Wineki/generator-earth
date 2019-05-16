@@ -16,8 +16,10 @@ export default class extends BaseContainer {
     
     
     componentDidMount() {
+        // 其他页面使用 this.props.history.push(`${this.context.CONTAINER_ROUTE_PREFIX}/list`) 跳转到本页面时
+        // 建议使用store中的formData拉取新的tableData
         if (this.props.history.action === 'PUSH') {
-            this.submitForm(null, true)
+            this.props.updateTable && this.props.formData && this.props.updateTable(this.props.formData)
         }
     }
     
@@ -25,25 +27,16 @@ export default class extends BaseContainer {
     /**
      * 提交表单
      */
-    submitForm = async (e, useFormDataInStore) => {
+    submitForm = async (e) => {
         e && e.preventDefault && e.preventDefault()
-        
-        // 重置table
-        this.props.resetTable && this.props.resetTable()
         
         // 提交表单最好新一个事务，不受其他事务影响
         await this.sleep()
         
-        let _formData;
+        let _formData = { ...this.props.form.getFieldsValue() }
+        // _formData里的一些值需要适配
+        _formData = mapMoment(_formData, 'YYYY-MM-DD HH:mm:ss')
         
-        if (useFormDataInStore) {
-            _formData = this.props.formData
-        } else {
-            _formData = { ...this.props.form.getFieldsValue() }
-            // _formData里的一些值需要适配
-            _formData = mapMoment(_formData, 'YYYY-MM-DD HH:mm:ss')
-        }
-            
         // action
         this.props.updateTable && this.props.updateTable(_formData)
     }

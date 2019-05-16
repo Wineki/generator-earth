@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { Table } from 'antd'
+import { Table, Modal } from 'antd'
 
 import { CURRENT_PAGE, PAGE_SIZE, TOTAL } from 'ROOT_SOURCE/base/BaseConfig'
 import BaseContainer from 'ROOT_SOURCE/base/BaseContainer'
+
+const confirm = Modal.confirm
 
 
 export default class extends BaseContainer {
@@ -49,10 +51,32 @@ export default class extends BaseContainer {
                 render: (text, record) => (
                     <Link to={`${this.context.CONTAINER_ROUTE_PREFIX}/item/${record.id}`}>查看/修改</Link>
                 )
+            }, {
+                title: '操作',
+                key: 'action',
+                render: (text, record) => {
+                    return <a onClick={()=>{this._onDelete(record.id)}} >删除</a> ;
+                }
             }]
     }
     
     
+    
+    _onDelete = (id) => {
+        
+        let _this = this
+        
+        confirm({
+            title: '确定要删除吗？',
+            async onOk() {
+                // 发请求
+                // await _this.props.deleteRecord({id})
+                // 重新刷新table
+                await _this.props.submitFormAsync(_this.props.formData)
+            },
+            onCancel() {},
+        });
+    }
     
     
     /**
