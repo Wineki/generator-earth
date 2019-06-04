@@ -4,6 +4,13 @@ let files = ['index.html']
 let cdnPrefix = '//j1.5' + '8cdn.com.cn/jinrong/finsys-js/';
 
 module.exports = {
+    'babel-polyfill': {
+        entry: {
+            path: cdnPrefix + 'babel-polyfill/6.23.0/polyfill.min.js',
+            type: 'js'
+        },
+        files: files
+    },
     'prop-types': {
         root: 'PropTypes',
         entry: {

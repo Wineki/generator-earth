@@ -41,6 +41,11 @@ module.exports = {
      * 这里我们最好设置一个统一解构的key值，方便框架将 res[RESPONSE_DESTRUST_KEY] 返回
      */
     RESPONSE_DESTRUST_KEY: 'data',
+    
+    
+    /**
+     * 此配置可以忽略，但请勿删除
+     */
     RESPONSE_LIST_DESTRUST_KEY: 'list'
     
 }

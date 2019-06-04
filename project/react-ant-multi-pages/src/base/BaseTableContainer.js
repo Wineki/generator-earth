@@ -66,17 +66,17 @@ export default class extends BaseContainer {
      * 分页，排序，筛选回调
      * 目前需求仅为分页
      */
-    handleTableChange = (pagination) => {
+    handleTableChange = async (pagination) => {
         // 重置table
         this.props.resetTable && this.props.resetTable()
         
         // 提交表单最好新一个事务，不受其他事务影响
-        setTimeout( () => {
-            this.props.updateTable({
-                ...this.props.formData,
-                [CURRENT_PAGE]: pagination.current //pagination选中另一页面
-            })
-        }, 0 )    
+        await this.sleep()
+        
+        this.props.updateTable({
+            ...this.props.formData,
+            [CURRENT_PAGE]: pagination.current //pagination选中另一页面
+        })
     }
     
     

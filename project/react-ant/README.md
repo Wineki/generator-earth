@@ -43,6 +43,13 @@ npm run build
 
 
 
+## 如何创建一个container
+
+    step1, 复制 一个已有的container，如 `AssetMgmt` 到 新的目录，如 `AbcMgmt`
+    step2, 修改 `AbcMgmt/constants.js`，确保命名空间唯一
+    done
+    step3, 修改App.js，添加该container的路由(route)，测试
+
 ## Changelog
 
 ### <%= version %>

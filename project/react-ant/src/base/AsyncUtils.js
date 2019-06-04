@@ -13,3 +13,11 @@ export function injectReducer(asyncReducers/*obj*/) {
     }
     store.replaceReducer( combineReducers(store.allReducers) )
 }
+
+
+export function injectSaga(asyncSagas/*generator function*/) {
+    if ( store.allSagas.indexOf(asyncSagas) === -1 ) {
+        store.sagaMiddleware.run(asyncSagas)
+        store.allSagas.push(asyncSagas)
+    }
+}

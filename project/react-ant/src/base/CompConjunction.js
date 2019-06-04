@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { injectReducer } from './AsyncUtils'
+import { injectReducer, injectSaga } from './AsyncUtils'
 
 
 function map2map_reducer(map) {
@@ -60,6 +60,12 @@ export default function combineContainer(Comp) {
             
             Object.assign(this._actions, actions)
             
+            return this
+        },
+        
+        
+        withSagas: function(sagas) {
+            injectSaga(sagas)
             return this
         },
         

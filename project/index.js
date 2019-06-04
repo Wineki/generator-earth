@@ -128,10 +128,12 @@ module.exports = class extends Generator {
             name: 'frameType',
             message: '框架选型',
             type: 'list',
-            choices: [{
+            choices: [
+            // jiajianrong 20190516 不再提供单页
+            /*{
                 name: 'React-ant',
                 value: 'react-ant'
-            }, {
+            }, */{
                 name: 'React-ant-multi-pages',
                 value: 'react-ant-multi-pages'
             }, {

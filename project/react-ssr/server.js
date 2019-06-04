@@ -1,10 +1,7 @@
 const http = require('http');
 const config = require('./config/server');
 
-const start = require('react-ssr-with-koa');
-const logger = require('react-ssr-with-koa/dist/logger');
-const html = require('react-ssr-with-koa/dist/html');
-const Proxy2Server = require('react-ssr-with-koa/dist/proxyToServer');
+const {start, logger, Html, proxyToServer} = require('react-ssr-with-koa');
 
 const Koa = require('koa');
 const app = new Koa();
@@ -21,6 +18,9 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (err) => {
     logger.error('unhandledRejection' + err.stack);
 });
+
+// 使用默认logger
+logger.init();
 
 start(app, {
     useDefaultProxy: true, // 使用react-ssr-with-koa里的proxy
@@ -39,50 +39,21 @@ start(app, {
             }
         });
 
-        // 使用默认log
-        app.performance();
-
 
         // api
         // 直接转发
         router.get('/api/simpleResponse', async (ctx, next) => {
-            const _app_proxy = new Proxy2Server(ctx.req, ctx.res);
-
-            const proxyOption = {
-                selfHandleResponse: false,
-                target: `${config.proxyPath}/simpleResponse`,
-            };
-
-            await _app_proxy.asyncTo(proxyOption, ctx)
-                .catch((e) => {
-                    console.log(e)
-                });
-            console.log('fff')
-        });
-        // api
-        // 需要简单包装下response
-        router.all('/api/*', async (ctx, next) => {
-
-            ctx.respond = false;
-
             const prefix = 'api';
             const proxyPath = ctx.request.url.replace(new RegExp(`^/${prefix}/`), '/');
 
-            const res = ctx.res;
-
-            // 在res上挂载app_proxyRes,拿到response时会调用这个方法
-            res.app_proxyRes = (dataObj, send) => {
-                send(dataObj)
-            };
-
-            const _app_proxy = new Proxy2Server(ctx.req, ctx.res);
-
             const proxyOption = {
-                selfHandleResponse: true,
                 target: `${config.proxyPath}/${proxyPath}`,
             };
 
-            await _app_proxy.to(proxyOption, ctx);
+            await proxyToServer(ctx, proxyOption)
+                .catch((e) => {
+
+                });
         });
 
         // page
@@ -90,7 +61,7 @@ start(app, {
 
             const PAGE = 'index';
 
-            const htmlObj = new html(ctx, PAGE)
+            const htmlObj = new Html(ctx, PAGE)
                 .init({
                     ssr: true,
                 })
@@ -117,7 +88,7 @@ start(app, {
 
             const PAGE = 'account';
 
-            const htmlObj = new html(ctx, PAGE)
+            const htmlObj = new Html(ctx, PAGE)
                 .init({
                     ssr: true,
                 })
