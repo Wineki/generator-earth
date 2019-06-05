@@ -6,13 +6,13 @@ import Loading from "lm-loading";
 import React from "react";
 import List from './Site/list'
 const My = Loadable({
-    loader: () => import( '../../index/containers/My/index.js' /* webpackChunkName:"My" */ ),
+    loader: () => import( '../containers/My/index.js' /* webpackChunkName:"My" */ ),
     loading() {
         return 'loading....'
     }
 });
 const Detail  = Loadable({
-    loader: () => import('../../index/containers/Site/detail' /* webpackChunkName:"site_detail" */),
+    loader: () => import('../containers/Site/detail' /* webpackChunkName:"site_detail" */),
     loading() {
         return <Loading isShow={true}/>
     }

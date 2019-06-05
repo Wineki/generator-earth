@@ -1,13 +1,9 @@
-export const initListData = window.__PRELOADED_STATE__ ?
-    window.__PRELOADED_STATE__.store.listData :
-    [];
-export const initToastData =
-    window.__PRELOADED_STATE__ ?
-        window.__PRELOADED_STATE__.store.toastData :
-        {
+export const initListData = [];
 
-            toastType: 'Hint',
-            showState: false
+export const initToastData = {
+
+    toastType: 'Hint',
+    showState: false
 
 
-        };
+};

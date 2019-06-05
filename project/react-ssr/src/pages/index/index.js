@@ -3,8 +3,7 @@ import 'scss_mixin/reset.scss' //reset 样式
 import 'tools/polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
-
-import store from './store/index'
+import {createStore} from 'redux';
 import {Provider} from 'react-redux'
 import {
     BrowserRouter as Router,
@@ -13,12 +12,24 @@ import Loadable from 'react-loadable'
 
 // import containers
 import App from './containers/App'
-import routeConfig from './routeConfig';
+import routeConfig from './containers/routeConfig';
+import reducers from "./reducers";
+import storeMiddleWare from "./store/middleware";
+import getStoreInitData from 'react-ssr-with-koa/getStoreInitData'
 // import Login from 'passport-mobile-login'
 //
 // console.log(Login)
 
 const supportsHistory = 'pushState' in window.history;
+
+// getInitialStoreData from window
+const storeInitData = getStoreInitData();
+
+
+const store = createStore(reducers, {
+    listData: storeInitData.listData || [],
+    toastData: storeInitData.toastData || false
+}, storeMiddleWare);
 
 
 Loadable.preloadReady().then(() => {

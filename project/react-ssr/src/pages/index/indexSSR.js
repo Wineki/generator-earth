@@ -7,26 +7,41 @@ import { StaticRouter } from 'react-router-dom'
 
 
 import App from './containers/App'
-import routeConfig from './routeConfig';
+import routeConfig from './containers/routeConfig';
+import request from './../../api/request'
 
 
 // only for ssr
 class AppSSR extends Component {
 
     /**
-     * 每一个page都有一个getInitialProps，用于获取初始数据或一些初始化操作
+     * getInitialStore。如果用到redux，像client一样，需要手动初始化server的store，并挂载到ctx上
      * ctx即koa里的ctx
      *
      * @param ctx
-     * @return {Promise<*>}
      */
     static async getInitialStore(ctx) {
 
+        // 可以向store中注入初始数据
+        // ctx.reduxStore = createStore(reducers,  {
+        //     listData: [{
+        //         "title": "新闻一",
+        //         "id": 4
+        //     }, {
+        //         "title": "新闻一",
+        //         "id": 1
+        //     }
+        //     ]
+        // },storeMiddleWare);
+
+        // 向server端的fetch注入ctx
+        request.injectCtx(ctx);
+
+        // 将store注入到ctx.reduxStore上
         ctx.reduxStore = createStore(reducers, storeMiddleWare);
-        // fetch or something
-        // return出的数据可以在render中的this.props中拿到
 
     }
+
 
     // 如果需要在路由组件中获取数据，需要传递routeConfig
     static routeConfig = routeConfig;

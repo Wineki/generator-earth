@@ -25,7 +25,7 @@ class List extends Component {
 
     render () {
 
-        const { listData } = this.props;
+        const { listData = [] } = this.props;
 
         return (
 
@@ -57,9 +57,5 @@ const mapStateToProps = (state) => {
 
 };
 
-const SiteDetail = connect(mapStateToProps)(List)
 
-SiteDetail.displayName = 'List';
-
-
-export default SiteDetail;
+export default connect(mapStateToProps)(List);

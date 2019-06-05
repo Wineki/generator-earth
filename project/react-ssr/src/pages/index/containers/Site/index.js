@@ -10,29 +10,16 @@ import {
 import { fetchListData } from '../../actions/list'
 
 import List from './list'
-import request from 'api/request'
 
 class Site extends Component {
 
+    // #if process.env.IS_SERVER === true
     static async getInitialProps(ctx) {
 
-        // 由于项目中用了redux-thunk，不是promise形式，无法在fetch后拿到数据
-        // 这里直接请求，然后放到store里
-        const data = await Promise.all(
-            [
-            request.post('/api/test/listDate', {
-                id: 1,
-                age: 20
-            })
-            ]
-        );
+        await ctx.reduxStore.dispatch(fetchListData());
 
-
-        ctx.reduxStore.dispatch({
-            type: 'FETACH_LIST_DATA',
-            data: data[0]
-        });
     }
+    // #endif
 
 
     constructor (props) {

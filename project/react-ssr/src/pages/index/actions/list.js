@@ -5,41 +5,35 @@ export const FETACH_LIST_DATA = 'FETACH_LIST_DATA';
 
 export const fetchListData = () => {
 
-	return (dispatch, getState) => {
+	return async (dispatch, getState) => {
 
 		dispatch(changeToastState({
 
 			showState: true,
 			toastType: 'Loading'
 
-		}))
+		}));
 
-		request.post('/api/test/listDate', {
+		const data = await request.post('/api/test/listDate', {
 		    id: 1,
             age: 20
-        })
-		.then((data) => {
+        }).catch((e) => {
+            return []
+        });
 
 
-		    setTimeout(() => {
-                dispatch ({
+        dispatch ({
 
-                    type: FETACH_LIST_DATA,
-                    data: data
-
-                })
+            type: FETACH_LIST_DATA,
+            data: data || []
+        });
 
 
-                dispatch(changeToastState({
+        dispatch(changeToastState({
 
-                    showState: false
+            showState: false
 
-                }))
-            }, 3000)
-
-
-
-		})
+        }))
 
 	}
 

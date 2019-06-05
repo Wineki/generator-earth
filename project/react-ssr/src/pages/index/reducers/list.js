@@ -1,7 +1,7 @@
 import { FETACH_LIST_DATA } from '../actions/list'
 import { initListData } from './initState'
 
-const listData = (state = initListData, action) => {
+const listData = (state = initListData , action) => {
 
     switch (action.type) {
 

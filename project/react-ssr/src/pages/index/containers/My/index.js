@@ -1,13 +1,24 @@
 import React from 'react'
 import './index.scss'
-import Wrapper from 'react-ssr-with-koa/dist/WrapperForContainer'
+import Wrapper from 'react-ssr-with-koa/WrapperForContainer'
+import request from 'api/request'
+
 
 class My extends React.Component {
 
+    // #if process.env.IS_SERVER === true
     static async getInitialProps() {
+
         // todo: server在这里请求数据
-        return 'my data from server'
+        console.log('getInitialProps： My Container');
+
+        const data = await request.get('/api/test/myData').catch((e) => {
+            return 'server data error'
+        });
+
+        return data
     }
+    // #endif
 
 
     constructor(props) {
@@ -44,4 +55,4 @@ class My extends React.Component {
 }
 
 
-export default Wrapper({name: 'My', type: 'route'})(My)
+export default Wrapper({name: 'index_My', type: 'route'})(My)
