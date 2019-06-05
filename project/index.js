@@ -117,6 +117,9 @@ module.exports = class extends Generator {
             }, {
                 name: 'React',
                 value: 'react'
+            }, {
+                name: 'React-latest-ts',
+                value: 'React-latest-ts'
             }],
             when: answer => answer.projectType === 'h5'
 
@@ -262,12 +265,12 @@ module.exports = class extends Generator {
         let tplPath = '';
 
         switch (this.frameType) {
-            
+
             case 'cloud':
             case 'standalone':
-            
+
                 tplFile = this.frameType;
-                
+
                 tplPath = this.templatePath(`../${tplFile}`);
 
                 this.fs.copyTpl(
@@ -283,7 +286,7 @@ module.exports = class extends Generator {
                         groupName: this.groupName
                     }
                 );
-            
+
 
             case 'react':
             case 'react-latest':
@@ -339,7 +342,7 @@ module.exports = class extends Generator {
 
                 break;
 
-            
+
             case 'react-ant':
             case 'react-ant-multi-pages':
             case 'react-ant-ts':

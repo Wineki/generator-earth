@@ -2,7 +2,12 @@ import React from 'react'
 import './index.scss'
 import { Link } from 'react-router-dom'
 
-const ListItem = ({title, id}) => {
+interface IProps {
+	title: string,
+	id: string
+}
+
+const ListItem = ({title, id}: IProps) => {
 
 	return (
 

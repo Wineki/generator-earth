@@ -7,19 +7,18 @@ let scrollSite = 0;
 /**
  * 定义组件props
  */
-interface Props {
+interface IProps {
     listData: object[]
 }
 
-interface ListItemI {
+interface IListItem {
     id: string,
     title: string
 }
-class List extends Component<Props> {
-    constructor(props: Props) {
+class List extends Component<IProps> {
+    constructor(props: IProps) {
         super(props);
     }
-    props: Props;
     componentDidMount () {
 
         //回到之前浏览的位置
@@ -44,7 +43,7 @@ class List extends Component<Props> {
 
                 {
 
-                    listData.map((item: ListItemI):any => {
+                    listData.map((item: IListItem) => {
 
                         return <ListItem key={item.id} title={item.title} id={item.id}/>
 

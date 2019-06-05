@@ -40,7 +40,7 @@ class MainRouter extends React.PureComponent {
                     <Route path='/site' component={Site}/>
                     <Route path='/my'
                            render={
-                               (props) => BundleLoader(My, props)
+                               (props: object) => BundleLoader(My, props)
                            }/>
 
                     <Redirect to='/home'/>
@@ -49,7 +49,7 @@ class MainRouter extends React.PureComponent {
         )
     }
 }
-let MainRouterWrapped = withRouter(MainRouter);
+const MainRouterWrapped = withRouter(MainRouter);
 
 const rootElement = document.getElementById('root');
 

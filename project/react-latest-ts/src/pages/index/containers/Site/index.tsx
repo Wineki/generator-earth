@@ -16,28 +16,28 @@ import BundleLoader from 'lm-bundle-loader'
 import List from './list'
 const Detail = () => import('./detail' /* webpackChunkName:"site_detail" */);
 
-interface State {
+interface IState {
     listData: object[],
     loadingShow: boolean
 }
-interface Props {
-
+interface IProps {
+    match: object
 }
 
-class Site extends Component {
+class Site extends Component<IProps, IState> {
 
-
-    constructor (props:Props) {
+    constructor (props: IProps) {
         super(props);
-        this.state = {
-            listData: [],
-            loadingShow: false
-        };
-        this._isMounted = false;
         this.loadingChangeHandle = this.loadingChangeHandle.bind(this);
     }
-    _isMounted: boolean;
-    state: State;
+
+    state: IState = {
+        listData: [],
+        loadingShow: false
+    }
+
+    _isMounted: boolean = false;
+
     componentDidMount () {
 
         this._isMounted = true;
@@ -71,7 +71,7 @@ class Site extends Component {
         this.loadingChangeHandle(true);
 
         request.post('/test/aaa', {})
-            .then((data) => {
+            .then((data: []) => {
 
                 this.loadingChangeHandle(false);
 
