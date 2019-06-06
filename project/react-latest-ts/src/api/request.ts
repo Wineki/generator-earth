@@ -1,13 +1,16 @@
-function parseJSON(response) {
+import {ResultParams} from '../interface/common'
+import {IResponse} from './request_interface'
+
+function parseJSON(response: any) {
 	return response.json();
 }
-const stringifyParams = (params) => (
+const stringifyParams = (params: object) => (
 
-	Object.keys(params).map((key) => (key + '=' + encodeURIComponent(params[key]))).join('&')
+	Object.keys(params).map((key: string): string => (key + '=' + encodeURIComponent(params[key]))).join('&')
 
 );
 
-function checkStatus(response) {
+function checkStatus(response: IResponse) {
 	if(response.status >= 200 && response.status < 300) {
 		return response;
 	} else if(response.status === 404) {
@@ -21,7 +24,7 @@ function checkStatus(response) {
 	throw error;
 }
 
-function handleData(data) {
+function handleData(data: any) {
 	//过滤条件
 	return data
 }
@@ -33,9 +36,12 @@ function handleData(data) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
+
 var params = {};
+
+
 export default {
-	get: function(url, options) {
+	get: function(url: string, options: object) {
 		var params = "?";
 		for(var key in options) {
 			if(options[key]){
@@ -59,7 +65,7 @@ export default {
 				err
 			}));
 	},
-	post: function(url, options) {
+	post: function(url: string, options: object) {
 		return fetch(url, {
 				method: "post",
 				headers: {
@@ -78,7 +84,7 @@ export default {
 				err
 			}));
 	},
-	setParams: function(data) {
+	setParams: function(data: object) {
 		for(var k in data) {
 			params[k] = data[k];
 		}
@@ -86,7 +92,7 @@ export default {
 	clearParams: function() {
 		params = {};
 	},
-	getParams: function() {
+	getParams: function(): object {
 		return params;
 	}
 }
