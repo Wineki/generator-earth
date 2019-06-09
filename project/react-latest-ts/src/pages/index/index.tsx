@@ -2,7 +2,7 @@
 import 'whatwg-fetch'
 import 'scss_mixin/reset.scss' //reset 样式
 import 'tools/polyfill'
-import React from 'react'
+import * as React from 'react'
 import ReactDOM from 'react-dom'
 
 import {
@@ -32,7 +32,7 @@ const My = () => import( './containers/My/index' /* webpackChunkName:"My" */ );
 
 //主页面路由
 class MainRouter extends React.PureComponent {
-    public render() {
+    render() {
         return (
             <ScrollToTop>
                 <Switch>

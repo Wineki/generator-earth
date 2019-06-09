@@ -119,7 +119,7 @@ module.exports = class extends Generator {
                 value: 'react'
             }, {
                 name: 'React-latest-ts',
-                value: 'React-latest-ts'
+                value: 'react-latest-ts'
             }],
             when: answer => answer.projectType === 'h5'
 
@@ -290,6 +290,7 @@ module.exports = class extends Generator {
 
             case 'react':
             case 'react-latest':
+            case 'react-latest-ts':
 
                 if (this.useRedux) {
                     tplFile = `${this.frameType}-redux`;

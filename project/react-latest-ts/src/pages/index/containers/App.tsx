@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import FooterBar from 'commons/FooterBar'
 
-class App extends Component {
+class App extends React.Component {
 
 
 

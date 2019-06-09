@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import ListItem from '../../components/ListItem/index'
 
 //长页面滚动 位置记录
@@ -15,7 +15,7 @@ interface IListItem {
     id: string,
     title: string
 }
-class List extends Component<IProps> {
+class List extends React.Component<IProps> {
     constructor(props: IProps) {
         super(props);
     }

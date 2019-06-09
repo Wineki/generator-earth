@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import {
     Route,
     Switch
@@ -24,7 +24,7 @@ interface IProps {
     match: object
 }
 
-class Site extends Component<IProps, IState> {
+class Site extends React.Component<IProps, IState> {
 
     constructor (props: IProps) {
         super(props);
