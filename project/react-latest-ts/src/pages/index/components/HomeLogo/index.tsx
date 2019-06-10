@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './index.scss'
-import logo from './img/logo.svg'
+import * as logo from './img/logo.svg'
 
 const HomeLogo = () => {
 

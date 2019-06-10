@@ -3,7 +3,7 @@ import 'whatwg-fetch'
 import 'scss_mixin/reset.scss' //reset 样式
 import 'tools/polyfill'
 import * as React from 'react'
-import ReactDOM from 'react-dom'
+import * as ReactDOM from 'react-dom'
 
 import {
     HashRouter as Router,
@@ -14,7 +14,7 @@ import {
 } from 'react-router-dom'
 
 // bundleLoader 异步加载路由页面
-import BundleLoader from 'lm-bundle-loader'
+import * as BundleLoader from 'lm-bundle-loader'
 
 import Home from "./containers/Home/index"
 import Site from './containers/Site/index'
@@ -31,7 +31,8 @@ import App from './containers/App'
 const My = () => import( './containers/My/index' /* webpackChunkName:"My" */ );
 
 //主页面路由
-class MainRouter extends React.PureComponent {
+// @ts-ignore
+class MainRouterBase extends React.PureComponent {
     render() {
         return (
             <ScrollToTop>
@@ -49,16 +50,16 @@ class MainRouter extends React.PureComponent {
         )
     }
 }
-const MainRouterWrapped = withRouter(MainRouter);
+const MainRouter = withRouter(MainRouterBase);
 
 const rootElement = document.getElementById('root');
 
 ReactDOM.render(
-
+    // @ts-ignore
     <Router>
         <div>
             <App/>
-            <MainRouterWrapped/>
+            <MainRouter/>
         </div>
     </Router>,
 

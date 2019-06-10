@@ -4,13 +4,13 @@ import {
     Switch
 } from 'react-router-dom'
 
-import Loading from 'lm-loading'
+import * as Loading from 'lm-loading'
 
 import request from 'api/request'
 
 
 // bundleLoader
-import BundleLoader from 'lm-bundle-loader'
+import * as BundleLoader from 'lm-bundle-loader'
 
 
 import List from './list'
