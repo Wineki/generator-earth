@@ -33,7 +33,7 @@
         "react-loadable": "5.5.0",
         "react-redux": "5.0.6",
         "react-router-dom": "4.2.2",
-        "react-ssr-with-koa": "1.0.0-alpha.2.0.4",
+        "react-ssr-with-koa": "1.0.0-alpha.2.0.7",
         "redux": "3.7.2",
         "redux-thunk": "2.2.0",
         "reselect": "3.0.1"
@@ -45,8 +45,8 @@
         "test": "earth-scripts test --env=jsdom",
         "mock": "earth-scripts mock",
         "ssr:start": "earth-scripts ssr-start --entry=server.js",
-        "ssr:deploy": "earth-scripts ssr-deploy --entry=server.js --name=MY_PROJECT --env=production",
-        "ssr:stop": "earth-scripts ssr-stop --name=MY_PROJECT",
+        "ssr:deploy": "earth-scripts ssr-deploy --entry=server.js --env=production",
+        "ssr:stop": "earth-scripts ssr-stop",
         "arthur-start": "npm run build && npm run ssr:deploy",
         "arthur-stop": "npm run ssr:stop"
     },

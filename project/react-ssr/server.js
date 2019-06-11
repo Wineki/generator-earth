@@ -39,6 +39,16 @@ start(app, {
             }
         });
 
+        // todo: process.env.NODE_ENV=production 环境，静态资源js，css，img等不放到cdn的话，需要自己处理
+        // if (process.env.NODE_ENV === 'production') {
+        //     const serve = require('koa-static');
+        //     const mount = require('koa-mount');
+        //     const path = require('path');
+        //     app.use(mount('/static',serve(path.join(path.resolve('build'), './static'), {
+        //         maxAge: 30 * 24 * 60 * 60,
+        //     })))
+        // }
+
 
         // api
         // 直接转发
