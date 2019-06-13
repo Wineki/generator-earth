@@ -54,6 +54,6 @@
     },
     "devDependencies": {
         "@types/react": "^16.7.20",
-        "earth-scripts": "1.0.8"
+        "earth-scripts": "^1.0.9"
     }
 }
