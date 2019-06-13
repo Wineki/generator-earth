@@ -25,4 +25,4 @@ Detail.getInitialProps = () => {
 };
 // #endif
 
-export default Wrapper({name: 'index_siteDetail', type: 'route'})(Detail)
+export default Wrapper({name: 'index_siteDetail'})(Detail)

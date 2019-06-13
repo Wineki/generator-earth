@@ -55,4 +55,4 @@ class My extends React.Component {
 }
 
 
-export default Wrapper({name: 'index_My', type: 'route'})(My)
+export default Wrapper({name: 'index_My'})(My)

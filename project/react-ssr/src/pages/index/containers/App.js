@@ -1,23 +1,15 @@
 import React, { Component } from 'react'
+import { renderRoutes } from 'react-router-config'
+import ScrollToTop from 'commons/ScrollToTop'
 
+import {
+    Switch,
+} from 'react-router-dom'
+import routeConfig from './routeConfig'
 
-import MainRouter from './MainRouter'
-import MainApp from './MainApp'
-
-import FooterBar from 'commons/FooterBar'
-import Wrapper from 'react-ssr-with-koa/WrapperForContainer'
 
 class App extends Component {
 
-    // #if process.env.IS_SERVER === true
-    static async getInitialProps(ctx) {
-
-
-        return {
-            AppWithServerData: '123'
-        }
-    }
-    // #endif
 
     componentDidMount () {
 
@@ -35,16 +27,13 @@ class App extends Component {
     render () {
 
 
-        const {routeConfig, initialData} = this.props;
-
         return (
 
-            <div>
-                <p style={{color: 'blue', margin: '10px 0'}}>{JSON.stringify(initialData)}</p>
-                <MainApp/>
-                <FooterBar/>
-                <MainRouter routeConfig={routeConfig}/>
-            </div>
+            <Switch>
+                <ScrollToTop>
+                    {renderRoutes(routeConfig)}
+                </ScrollToTop>
+            </Switch>
 
 
         )
@@ -53,4 +42,4 @@ class App extends Component {
 
 }
 
-export default Wrapper({type: 'app'})(App);
+export default App;

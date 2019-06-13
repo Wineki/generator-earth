@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
-import {
-    Route,
-    Switch,
-} from 'react-router-dom'
+import { renderRoutes } from 'react-router-config'
 
 
 import { fetchListData } from '../../actions/list'
 
-import List from './list'
 
 class Site extends Component {
 
@@ -47,38 +42,13 @@ class Site extends Component {
 
     render () {
 
-        const { match } = this.props;
+        const { route } = this.props;
         const { listData } = this.props;
 
-        // return cloneChildren
-        return (
-            <Switch>
-                {
-                    this.props.routeConfig.map((route, i) => {
-                        if (route.path === '/site') {
-                            return (
-                                <Route
-                                    path={route.path}
-                                    exact={route.exact}
-                                    render={routeProps => <List listData={listData} {...routeProps}/>}
-                                    key={i}
-                                />
-                            )
-                        }
+        return renderRoutes(route.routes, {
+            listData
+        })
 
-                        return (
-                            <Route
-                                path={route.path}
-                                exact={route.exact}
-                                component={route.component}
-                                key={i}
-                            />
-                        )
-                    })
-                }
-
-            </Switch>
-        )
 
     }
 

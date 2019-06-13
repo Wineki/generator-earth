@@ -1,7 +1,10 @@
-
+import MainApp from './MainApp'
 import Home from "./Home";
 import Site from './Site'
 import Loadable from "react-loadable";
+import {
+    Redirect,
+} from 'react-router-dom'
 import Loading from "lm-loading";
 import React from "react";
 import List from './Site/list'
@@ -21,23 +24,32 @@ const Detail  = Loadable({
 
 export default [
     {
-        path: '/home',
-        component: Home
-    },
-    {
-        path: '/site',
-        component: Site,
-        routes: [{
-            path: '/site',
-            component: List,
-            exact: true
-        },{
-            path: '/site/:id',
-            component: Detail,
-        }]
-    },
-    {
-        path: '/my',
-        component: My
+        component: MainApp,
+        routes: [
+            {
+                path: '/home',
+                component: Home
+            },
+            {
+                path: '/site',
+                component: Site,
+                routes: [{
+                    path: '/site',
+                    component: List,
+                    exact: true
+                },{
+                    path: '/site/:id',
+                    component: Detail,
+                }]
+            },
+            {
+                path: '/my',
+                component: My
+            },
+            {
+                path: '*',
+                component: () => <Redirect to="/home"/>
+            },
+        ]
     }
 ]

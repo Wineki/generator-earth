@@ -45,9 +45,6 @@ class AppSSR extends Component {
 
     // 如果需要在路由组件中获取数据，需要传递routeConfig
     static routeConfig = routeConfig;
-    // 如果App的初始数据是通过getInitialProps获取的，则需要传递App
-    static App = App;
-
 
 
     render () {
@@ -69,7 +66,7 @@ class AppSSR extends Component {
                     location={location}
                     context={context}
                 >
-                    <App routeConfig = {routeConfig}/>
+                    <App/>
                 </StaticRouter>
             </Provider>
 

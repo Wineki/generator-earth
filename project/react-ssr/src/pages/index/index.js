@@ -9,10 +9,9 @@ import {
     BrowserRouter as Router,
 } from 'react-router-dom'
 import Loadable from 'react-loadable'
+import App from './containers/App'
 
 // import containers
-import App from './containers/App'
-import routeConfig from './containers/routeConfig';
 import reducers from "./reducers";
 import storeMiddleWare from "./store/middleware";
 import getStoreInitData from 'react-ssr-with-koa/getStoreInitData'
@@ -36,7 +35,7 @@ Loadable.preloadReady().then(() => {
     ReactDOM.hydrate(
         <Provider store={store}>
             <Router basename='/index' forceRefresh={!supportsHistory}>
-                <App routeConfig={routeConfig}/>
+                <App/>
             </Router>
         </Provider>,
         document.getElementById('root')
