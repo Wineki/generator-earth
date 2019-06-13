@@ -65,6 +65,15 @@ const PureSaga = Loadable({
 });
 
 
+//7
+const AutoDestination = Loadable({
+    loader: () => import('./containers/AutoDestination/' /* webpackChunkName:"AutoDestination" */),
+    loading() {
+        return null;
+    }
+});
+
+
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu, Item } = Menu;
@@ -113,11 +122,11 @@ class App extends Component {
                         
                         <SubMenu key="/menu1" title={<span><Icon type="book"/>使用框架</span>}>
                             <Item key="/AssetMgmt">
-                                <span>完全使用框架(推荐)</span>
+                                <span>完全使用框架</span>
                                 <Link to="/AssetMgmt"></Link>
                             </Item>
                             <Item key="/AssetProdMgmt">
-                                <span>部分使用框架1(推荐)</span>
+                                <span>部分使用框架1</span>
                                 <Link to="/AssetProdMgmt"></Link>
                             </Item>
                             <Item key="/FundChannelCfg">
@@ -135,11 +144,12 @@ class App extends Component {
                                 <span>不使用redux</span>
                                 <Link to="/FunderProdMgmt"></Link>
                             </Item>
-                        </SubMenu>
-                        
-                        <SubMenu key="/menu3" title={<span><Icon type="book"/>完全使用Saga</span>}>
+                            <Item key="/AutoDestination">
+                                <span>使用redux-thunk(推荐)</span>
+                                <Link to="/AutoDestination"></Link>
+                            </Item>
                             <Item key="/PureSaga">
-                                <span>完全使用Saga</span>
+                                <span>使用redux-saga(推荐)</span>
                                 <Link to="/PureSaga"></Link>
                             </Item>
                         </SubMenu>
@@ -174,6 +184,9 @@ class App extends Component {
                             
                             {/* 交易查询 */}
                             <Route path="/TransactionQuery" component={TransactionQuery}/>
+                            
+                            {/* 自动生成 */}
+                            <Route path="/AutoDestination" component={AutoDestination}/>
                             
                         </Switch>
                     </Content>
