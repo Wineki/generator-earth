@@ -1,5 +1,5 @@
 import { withRouter } from 'react-router-dom'
-import * as React from 'react';
+import React from 'react';
 
 //需要保留滚动位置的页面
 const LISTS = ['/site'];

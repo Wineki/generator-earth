@@ -1,40 +1,39 @@
-import * as React from 'react'
+import React from 'react'
 import {
     Route,
     Switch
 } from 'react-router-dom'
 
-import * as Loading from 'lm-loading'
+import Loading from 'lm-loading'
 
 import request from 'api/request'
 
 
 // bundleLoader
-import * as BundleLoader from 'lm-bundle-loader'
-
+import BundleLoader from 'lm-bundle-loader'
+import {RouteComponentProps} from 'react-router'
 
 import List from './list'
 const Detail = () => import('./detail' /* webpackChunkName:"site_detail" */);
 
-interface IState {
-    listData: object[],
-    loadingShow: boolean
+
+const initialState = {
+    listData: [],
+    loadingShow: false
 }
-interface IProps {
-    match: object
+type State = Readonly<typeof initialState>
+
+interface IProps extends RouteComponentProps<{}> {
 }
 
-class Site extends React.Component<IProps, IState> {
+class Site extends React.Component<IProps, State> {
 
     constructor (props: IProps) {
         super(props);
         this.loadingChangeHandle = this.loadingChangeHandle.bind(this);
     }
 
-    state: IState = {
-        listData: [],
-        loadingShow: false
-    }
+    readonly state: State = initialState
 
     _isMounted: boolean = false;
 

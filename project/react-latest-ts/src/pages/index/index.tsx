@@ -2,8 +2,8 @@
 import 'whatwg-fetch'
 import 'scss_mixin/reset.scss' //reset 样式
 import 'tools/polyfill'
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 import {
     HashRouter as Router,
@@ -14,7 +14,7 @@ import {
 } from 'react-router-dom'
 
 // bundleLoader 异步加载路由页面
-import * as BundleLoader from 'lm-bundle-loader'
+import BundleLoader from 'lm-bundle-loader'
 
 import Home from "./containers/Home/index"
 import Site from './containers/Site/index'

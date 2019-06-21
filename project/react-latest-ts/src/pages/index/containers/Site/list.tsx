@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import ListItem from '../../components/ListItem/index'
 
 //长页面滚动 位置记录
@@ -8,13 +8,12 @@ let scrollSite = 0;
  * 定义组件props
  */
 interface IProps {
-    listData: object[]
+    listData: {
+        id: string,
+        title: string
+    }[]
 }
 
-interface IListItem {
-    id: string,
-    title: string
-}
 
 class List extends React.Component<IProps> {
     constructor(props: IProps) {
@@ -44,7 +43,7 @@ class List extends React.Component<IProps> {
 
                 {
 
-                    listData.map((item: IListItem) => {
+                    listData.map((item) => {
 
                         return <ListItem key={item.id} title={item.title} id={item.id}/>
 

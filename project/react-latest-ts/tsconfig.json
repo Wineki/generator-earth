@@ -1,9 +1,10 @@
 {
     "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
         "baseUrl": ".",
         "outDir": "./build",
-        "module": "commonjs",
-        "target": "es5",
+        "module": "esnext",
+        "target": "es6",
         "lib": ["dom","es2015"],
         "sourceMap": true,
         "allowJs": true,

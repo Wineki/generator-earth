@@ -28,6 +28,7 @@
         "raf": "^3.4.0",
         "react": "16.4.2",
         "react-dom": "16.4.2",
+        "react-router": "^5.0.1",
         "react-router-dom": "^4.2.2",
         "typescript": "^3.4.1"
     },
@@ -76,7 +77,8 @@
     },
     "devDependencies": {
         "@types/react": "^16.7.20",
-        "earth-scripts": "^1.0.4"
+        "@types/react-router": "^5.0.2",
+        "earth-scripts": "^1.0.10"
     },
     "proxy": "http://localhost:3001/"
 }
