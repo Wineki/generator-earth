@@ -78,6 +78,9 @@
     "devDependencies": {
         "@types/react": "^16.7.20",
         "@types/react-router": "^5.0.2",
+        "@types/react-dom": "^16.8.4",
+        "@types/whatwg-fetch": "0.0.33",
+        "@types/react-router-dom": "^4.3.4",
         "earth-scripts": "^1.0.10"
     },
     "proxy": "http://localhost:3001/"

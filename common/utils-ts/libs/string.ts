@@ -15,7 +15,7 @@ export const strTirm = (str: string): string => {
 
 };
 //截断
-export const strTrunc = (str: string, total = 10): string => {
+export const strTrunc = (str: string, total: number = 10): string => {
 
     if (typeof str !== 'string') throw new Error('strTrunc arg not string');
 

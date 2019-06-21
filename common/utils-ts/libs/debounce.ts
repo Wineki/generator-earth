@@ -9,7 +9,7 @@
 export const debounce = (func, wait, immediate) => {
     // @ts-ignore
     let timeout, result;
-    return function() {
+    return function(this: void) {
         let context = this, args = arguments;
         let later = function() {
             timeout = null;

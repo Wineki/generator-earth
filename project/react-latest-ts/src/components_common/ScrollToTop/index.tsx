@@ -1,16 +1,14 @@
 import { withRouter } from 'react-router-dom'
-import React from 'react';
+import { RouteComponentProps } from 'react-router'
+import React, { ReactNode } from 'react';
 
 //需要保留滚动位置的页面
 const LISTS = ['/site'];
-interface Props {
-    location: {
-        pathname: string
-    },
-    children?: any
+interface IProps extends RouteComponentProps<{}> {
+    children?: ReactNode
 }
-class ScrollToTop extends React.PureComponent<Props> {
-    componentDidUpdate(prevProps: Props) {
+class ScrollToTop extends React.PureComponent<IProps> {
+    componentDidUpdate(prevProps: IProps) {
 
         //当前路由path
         let newPathName = this.props.location.pathname;

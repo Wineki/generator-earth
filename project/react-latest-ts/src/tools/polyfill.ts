@@ -34,7 +34,7 @@ if (!Object.keys) {
     Object.keys = (function () {
         var hasOwnProperty = Object.prototype.hasOwnProperty,
             hasDontEnumBug = !({toString: null}).propertyIsEnumerable('toString'),
-            dontEnums = [
+            dontEnums: string[] = [
                 'toString',
                 'toLocaleString',
                 'valueOf',
@@ -45,10 +45,10 @@ if (!Object.keys) {
             ],
             dontEnumsLength = dontEnums.length;
         
-        return function (obj) {
+        return function (obj: any) {
             if (typeof obj !== 'object' && typeof obj !== 'function' || obj === null) throw new TypeError('Object.keys called on non-object');
             
-            var result = [];
+            var result: any[] = [];
             
             for (var prop in obj) {
                 if (hasOwnProperty.call(obj, prop)) result.push(prop);

@@ -11,7 +11,7 @@ import request from 'api/request'
 
 // bundleLoader
 import BundleLoader from 'lm-bundle-loader'
-import {RouteComponentProps} from 'react-router'
+import { RouteComponentProps } from 'react-router'
 
 import List from './list'
 const Detail = () => import('./detail' /* webpackChunkName:"site_detail" */);

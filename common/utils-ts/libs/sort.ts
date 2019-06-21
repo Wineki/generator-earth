@@ -11,8 +11,8 @@ export function arrSortQuick<T>(arr: T[]): T[] {
     let pivotIndex = Math.floor(arr.length/2);
     //删除轴点
     let pivot = arr.splice(pivotIndex, 1)[0];
-    let left = [];
-    let right = [];
+    let left: T[] = [];
+    let right: T[] = [];
 
     for (let i = 0, len = arr.length; i < len; i++) {
 
@@ -41,7 +41,7 @@ export function arrSortBubble<T>(arr: T[]): T[] {
     if (Object.prototype.toString.call(arr) !== '[object Array]') throw new Error('arrSortQuick函数参数不为Array')
     if (arr.length <= 1) return arr;
 
-    let tmp;
+    let tmp: T;
     let len = arr.length;
 
     for (let i = 0; i <= len; i++) {
@@ -67,14 +67,14 @@ export function arrSortBubble<T>(arr: T[]): T[] {
  * @param arr
  * @returns {*}
  */
-export function arrSortMerge<T>(arr: T[]): T[] {
+export function arrSortMerge (arr: any[]): any[] {
 
     if (Object.prototype.toString.call(arr) !== '[object Array]') throw new Error('arrSortQuick函数参数不为Array')
     if (arr.length <= 1) return arr;
 
-    let merge = (left: T[], right: T[]) => {
+    let merge = (left: any[], right: any[]) => {
 
-        let tmp = [];
+        let tmp: any[] = [];
 
         while(left.length && right.length) {
 

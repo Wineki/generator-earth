@@ -1,6 +1,14 @@
 import { getCookie } from './libs/cookie'
 
-const matchSearch = (search: string, reg: RegExp) => search.match(reg) && search.match(reg)[1] ? search.match(reg)[1] : null;
+/**
+ * 截出字符串
+ * @param search 
+ * @param reg 
+ */
+interface ImatchSearch {
+    (search: any, reg: RegExp): any
+}
+const matchSearch: ImatchSearch = (search, reg) => search && search.match(reg) && search.match(reg)[1] ? search.match(reg)[1] : null;
 
 /**
  * 配合fetch 格式化body
@@ -81,7 +89,10 @@ const pageBackFromNextPage = (actionToDo: ACTIONTODO): void => {
  * @param query
  * @returns {{}}
  */
-const getRequestParams = (query: string): object => {
+interface IgetRequestParams {
+    (query: string): {[propName: string]: any}
+}
+const getRequestParams: IgetRequestParams = (query) => {
     let search = query.trim().replace(/^[?#&]/, '') || window.location.search.substring(1);
     return search ? JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) {
         return key === "" ? value : decodeURIComponent(value);

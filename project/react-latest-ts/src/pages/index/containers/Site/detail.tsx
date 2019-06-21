@@ -1,19 +1,11 @@
 import React from 'react'
 import { getRequestParams } from 'tools/utils'
+import { RouteComponentProps } from 'react-router'
 
-interface IMatch {
-    params: IParams
-}
 
-interface IParams {
-    id: string
-}
+interface Iprops extends RouteComponentProps<{id: string}> {}
 
-interface ILocation {
-    search: string
-}
-
-const Detail = ({match, location}: {match: IMatch, location: ILocation}) => {
+const Detail = ({match, location}: Iprops) => {
 
 
     const query = getRequestParams(location.search);
