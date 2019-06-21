@@ -20,6 +20,7 @@ function checkStatus(response: IResponse) {
 	}
 
 	const error = new Error(response.statusText);
+	// @ts-ignore
 	error.response = response;
 	throw error;
 }
