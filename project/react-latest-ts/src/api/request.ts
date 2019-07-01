@@ -1,4 +1,3 @@
-import {ResultParams} from '../interface/common'
 import {IResponse} from './request_interface'
 
 function parseJSON(response: any) {
