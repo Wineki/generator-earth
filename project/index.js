@@ -182,7 +182,13 @@ module.exports = class extends Generator {
             message: '是否使用 redux',
             type: 'confirm',
             default: false,
-            when: answer => (answer.projectType === 'h5' && answer.frameType.indexOf('react') >= 0)
+            when: answer => {
+                // todo: react-ts暂未提供redux版
+                return (answer.projectType === 'h5' && (
+                    answer.frameType === 'react' ||
+                    answer.frameType === 'react-latest'
+                ))
+            }
 
         }, {
 
@@ -341,7 +347,7 @@ module.exports = class extends Generator {
                 );
 
                 break;
-            
+
             case 'react-latest-ts':
                     // TODO: 支持redux
                     // if (this.useRedux) {
@@ -350,7 +356,7 @@ module.exports = class extends Generator {
                     //     tplFile = `${this.frameType}`;
                     // }
                     tplFile = `${this.frameType}`;
-    
+
                     tplPath = this.templatePath(`../${tplFile}`);
                     this.fs.copyTpl(
                         tplPath,
@@ -367,7 +373,7 @@ module.exports = class extends Generator {
                             flexibleStr: '<%= htmlWebpackPlugin.options.flexibleStr %>'
                         }
                     );
-    
+
                     this.fs.copyTpl(
                         this.templatePath(`../_gitignore`),
                         outPutUrl + '.gitignore'
@@ -380,20 +386,20 @@ module.exports = class extends Generator {
                         this.templatePath(`../_babelrc`),
                         outPutUrl + '.babelrc'
                     );
-    
-    
+
+
                     //add scss
                     this.fs.copyTpl(
                         this.templatePath(`../../common/scss_mixin`),
                         `${outPutUrl}src/scss_mixin/`
                     );
-    
+
                     //add utils 语法糖
                     this.fs.copyTpl(
                         this.templatePath(`../../common/utils-ts`), /* ts版utils */
                         `${outPutUrl}src/tools/utils/`
                     );
-    
+
                     break;
 
             case 'react-ant':

@@ -5,6 +5,7 @@ import 'tools/polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import { RouteComponentProps } from 'react-router'
 import {
     HashRouter as Router,
     Route,
@@ -30,9 +31,12 @@ import App from './containers/App'
 // 参数中的注释部分不建议删除，原因请看上述文档
 const My = () => import( './containers/My/index' /* webpackChunkName:"My" */ );
 
+interface IProps extends RouteComponentProps<{}>{
+
+}
 //主页面路由
 // @ts-ignore
-class MainRouterBase extends React.PureComponent {
+class MainRouterBase extends React.PureComponent<IProps, {}> {
     render() {
         return (
             <ScrollToTop>
