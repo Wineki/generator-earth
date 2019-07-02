@@ -10,7 +10,7 @@
         "allowJs": true,
         "jsx": "react",
         "moduleResolution": "node",
-        "rootDir": ".",
+        "rootDir": "src",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
@@ -33,11 +33,7 @@
     "exclude": [
         "node_modules",
         "build",
-        "scripts",
-        "acceptance-tests",
-        "webpack",
-        "jest",
-        "src/setupTests.ts",
-        "index.d.ts"
+        "config",
+        "mock"
     ]
 }
