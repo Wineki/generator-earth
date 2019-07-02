@@ -117,6 +117,9 @@ module.exports = class extends Generator {
             }, {
                 name: 'React',
                 value: 'react'
+            }, {
+                name: 'React-latest-ts',
+                value: 'react-latest-ts'
             }],
             when: answer => answer.projectType === 'h5'
 
@@ -262,12 +265,12 @@ module.exports = class extends Generator {
         let tplPath = '';
 
         switch (this.frameType) {
-            
+
             case 'cloud':
             case 'standalone':
-            
+
                 tplFile = this.frameType;
-                
+
                 tplPath = this.templatePath(`../${tplFile}`);
 
                 this.fs.copyTpl(
@@ -283,7 +286,7 @@ module.exports = class extends Generator {
                         groupName: this.groupName
                     }
                 );
-            
+
 
             case 'react':
             case 'react-latest':
@@ -338,8 +341,61 @@ module.exports = class extends Generator {
                 );
 
                 break;
-
             
+            case 'react-latest-ts':
+                    // TODO: 支持redux
+                    // if (this.useRedux) {
+                    //     tplFile = `${this.frameType}-redux`;
+                    // } else {
+                    //     tplFile = `${this.frameType}`;
+                    // }
+                    tplFile = `${this.frameType}`;
+    
+                    tplPath = this.templatePath(`../${tplFile}`);
+                    this.fs.copyTpl(
+                        tplPath,
+                        outPutUrl,
+                        {
+                            name: this.name,
+                            author: this.author,
+                            frameType: this.frameType,
+                            email: this.email,
+                            version: this.version,
+                            desc: this.desc,
+                            groupName: this.groupName,
+                            resetCss: resetCss,
+                            flexibleStr: '<%= htmlWebpackPlugin.options.flexibleStr %>'
+                        }
+                    );
+    
+                    this.fs.copyTpl(
+                        this.templatePath(`../_gitignore`),
+                        outPutUrl + '.gitignore'
+                    );
+                    this.fs.copyTpl(
+                        this.templatePath(`../_editorconfig`),
+                        outPutUrl + '.editorconfig'
+                    );
+                    this.fs.copyTpl(
+                        this.templatePath(`../_babelrc`),
+                        outPutUrl + '.babelrc'
+                    );
+    
+    
+                    //add scss
+                    this.fs.copyTpl(
+                        this.templatePath(`../../common/scss_mixin`),
+                        `${outPutUrl}src/scss_mixin/`
+                    );
+    
+                    //add utils 语法糖
+                    this.fs.copyTpl(
+                        this.templatePath(`../../common/utils-ts`), /* ts版utils */
+                        `${outPutUrl}src/tools/utils/`
+                    );
+    
+                    break;
+
             case 'react-ant':
             case 'react-ant-multi-pages':
             case 'react-ant-ts':
