@@ -1,4 +1,4 @@
-import {IResponse} from './request_interface'
+import {IResponse} from './interface'
 
 function parseJSON(response: any) {
 	return response.json();

@@ -1,22 +1,12 @@
-import React from 'react'
-import ListItem from '../../components/ListItem/index'
+import React from 'react';
+import ListItem from '../../components/ListItem/index';
+import { ListProps } from './interface';
 
 //长页面滚动 位置记录
 let scrollSite = 0;
 
-/**
- * 定义组件props
- */
-interface IProps {
-    listData: {
-        id: string,
-        title: string
-    }[]
-}
-
-
-class List extends React.Component<IProps> {
-    constructor(props: IProps) {
+class List extends React.Component<ListProps> {
+    constructor(props: ListProps) {
         super(props);
     }
     componentDidMount () {

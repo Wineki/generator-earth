@@ -1,13 +1,11 @@
-import React from 'react'
-import './index.scss'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import './index.scss';
+import { Link } from 'react-router-dom';
+import { ListItemProps } from './interface';
 
-type IProps = {
-	title: string,
-	id: string
-}
 
-const ListItem: React.SFC<IProps> = ({title, id}) => {
+
+const ListItem: React.SFC<ListItemProps> = ({title, id}) => {
 
 	return (
 

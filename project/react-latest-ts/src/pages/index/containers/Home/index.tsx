@@ -1,7 +1,7 @@
 import React from 'react'
 import HomeLogo from '../../components/HomeLogo/index'
 
-const Home = () => {
+const Home: React.SFC<{}> = () => {
 
 	return (
 
