@@ -1,26 +1,25 @@
-import { getCookie } from './libs/cookie'
+import { getCookie } from './libs/cookie';
+import { MatchSearchI, StringifyParamsI, ACTIONTODO,
+    GetRequestParamsI } from './interface';
 
 /**
  * 截出字符串
  * @param search 
  * @param reg 
  */
-interface ImatchSearch {
-    (search: any, reg: RegExp): any
-}
-const matchSearch: ImatchSearch = (search, reg) => search && search.match(reg) && search.match(reg)[1] ? search.match(reg)[1] : null;
+
+const matchSearch: MatchSearchI = (search, reg) => search && search.match(reg) && search.match(reg)[1] ? search.match(reg)[1] : null;
 
 /**
  * 配合fetch 格式化body
  * @param params
  */
-const stringifyParams = (params: object) => (
+const stringifyParams: StringifyParamsI = (params) => (
     Object.keys(params).map((key: string): string => (key + '=' + encodeURIComponent(params[key]))).join('&')
 );
 
 /**
  * 判断是否是ios
- * @returns {boolean}
  */
 const isIos: () => boolean = () => {
     return /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)
@@ -54,8 +53,6 @@ const getAbsoultePath: (href: string) => string = href => {
  * 监听浏览器回退事件
  * @param actionToDo
  */
-// @ts-ignore
-type ACTIONTODO = (e: Event) => void
 const pageBackFromNextPage = (actionToDo: ACTIONTODO): void => {
 
     // pageshow
@@ -86,13 +83,9 @@ const pageBackFromNextPage = (actionToDo: ACTIONTODO): void => {
 
 /**
  * 获取URL 参数对象
- * @param query
- * @returns {{}}
  */
-interface IgetRequestParams {
-    (query: string): {[propName: string]: any}
-}
-const getRequestParams: IgetRequestParams = (query) => {
+
+const getRequestParams: GetRequestParamsI = (query) => {
     let search = query.trim().replace(/^[?#&]/, '') || window.location.search.substring(1);
     return search ? JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) {
         return key === "" ? value : decodeURIComponent(value);
