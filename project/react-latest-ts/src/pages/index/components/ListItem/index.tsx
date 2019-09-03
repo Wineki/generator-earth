@@ -1,11 +1,11 @@
 import React from 'react';
 import './index.scss';
 import { Link } from 'react-router-dom';
-import { ListItemProps } from './interface';
+import { TListItem } from './interface';
 
 
 
-const ListItem: React.SFC<ListItemProps> = ({title, id}) => {
+const ListItem: React.SFC<TListItem> = ({title, id}) => {
 
 	return (
 

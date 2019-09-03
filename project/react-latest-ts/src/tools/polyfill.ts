@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 if (!Array.prototype.reduce) {
-    Array.prototype.reduce = function(callback /*, initialValue*/) {
+    Array.prototype.reduce = function(callback: any /*, initialValue*/) {
         'use strict';
         if (this === null) {
             throw new TypeError('Array.prototype.reduce called on null or undefined');

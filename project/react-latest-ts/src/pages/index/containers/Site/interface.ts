@@ -6,12 +6,13 @@ export const initialState = {
 }
 export type State = Readonly<typeof initialState>
 
-export interface SiteProps extends RouteComponentProps<{}> {
-}
+export interface ISite extends RouteComponentProps<{id: string}> {}
 
-export interface ListProps {
+export interface IList {
     listData: {
         id: string,
         title: string
     }[]
 }
+
+export interface IDetail extends RouteComponentProps<{id: string}> {}

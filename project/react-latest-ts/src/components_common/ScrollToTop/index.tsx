@@ -1,15 +1,15 @@
 import { withRouter } from 'react-router-dom';
 import React from 'react';
-import { ScrollToTopProps } from './interface';
+import { IScrollToTop } from './interface';
 
 //需要保留滚动位置的页面
 const LISTS = ['/site'];
 
-class ScrollToTop extends React.PureComponent<ScrollToTopProps, any> {
-    constructor(props: ScrollToTopProps) {
+class ScrollToTop extends React.PureComponent<IScrollToTop, any> {
+    constructor(props: IScrollToTop) {
         super(props);
     }
-    componentDidUpdate(prevProps: ScrollToTopProps) {
+    componentDidUpdate(prevProps: IScrollToTop) {
 
         //当前路由path
         let newPathName = this.props.location.pathname;

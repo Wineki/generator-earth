@@ -1,12 +1,12 @@
 import React from 'react';
 import ListItem from '../../components/ListItem/index';
-import { ListProps } from './interface';
+import { IList } from './interface';
 
 //长页面滚动 位置记录
 let scrollSite = 0;
 
-class List extends React.Component<ListProps> {
-    constructor(props: ListProps) {
+class List extends React.Component<IList> {
+    constructor(props: IList) {
         super(props);
     }
     componentDidMount () {

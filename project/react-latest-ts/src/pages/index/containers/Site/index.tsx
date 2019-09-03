@@ -13,13 +13,13 @@ import request from 'api/request';
 import BundleLoader from 'lm-bundle-loader';
 
 import List from './list';
-import { SiteProps, State, initialState} from './interface';
+import { ISite, State, initialState} from './interface';
 
 const Detail = () => import('./detail' /* webpackChunkName:"site_detail" */);
 
-class Site extends React.Component<SiteProps, State> {
+class Site extends React.Component<ISite, State> {
 
-    constructor (props: SiteProps) {
+    constructor (props: ISite) {
         super(props);
         this.loadingChangeHandle = this.loadingChangeHandle.bind(this);
     }
@@ -80,13 +80,13 @@ class Site extends React.Component<SiteProps, State> {
         return (
             <div>
                 <Switch>
-                    <Route exact path={`${match.path}`} render={routeProps => {
+                    <Route exact path={`${match.path}`} render={(routeProps: ISite) => {
                         return <List listData={listData} />
                     }}/>
                     <Route
                         path={`${match.path}/:id`}
                         render={
-                            (props) => BundleLoader(Detail, props)
+                            (props: ISite) => BundleLoader(Detail, props)
                         }
                     />
                 </Switch>

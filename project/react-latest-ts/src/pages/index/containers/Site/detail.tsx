@@ -1,11 +1,11 @@
 import React from 'react'
 import { getRequestParams } from 'tools/utils'
 import { RouteComponentProps } from 'react-router'
+import { IDetail } from './interface'
 
 
-interface Iprops extends RouteComponentProps<{id: string}> {}
 
-const Detail = ({match, location}: Iprops) => {
+const Detail: React.SFC<IDetail> = ({match, location}) => {
 
 
     const query = getRequestParams(location.search);

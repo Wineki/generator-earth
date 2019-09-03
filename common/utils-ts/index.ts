@@ -1,6 +1,6 @@
 import { getCookie } from './libs/cookie';
-import { MatchSearchI, StringifyParamsI, ACTIONTODO,
-    GetRequestParamsI } from './interface';
+import { IMatchSearch, IStringifyParams, TActionToDo,
+    IGetRequestParams } from './interface';
 
 /**
  * 截出字符串
@@ -8,13 +8,13 @@ import { MatchSearchI, StringifyParamsI, ACTIONTODO,
  * @param reg 
  */
 
-const matchSearch: MatchSearchI = (search, reg) => search && search.match(reg) && search.match(reg)[1] ? search.match(reg)[1] : null;
+const matchSearch: IMatchSearch = (search, reg) => search && search.match(reg) && search.match(reg)[1] ? search.match(reg)[1] : null;
 
 /**
  * 配合fetch 格式化body
  * @param params
  */
-const stringifyParams: StringifyParamsI = (params) => (
+const stringifyParams: IStringifyParams = (params) => (
     Object.keys(params).map((key: string): string => (key + '=' + encodeURIComponent(params[key]))).join('&')
 );
 
@@ -53,7 +53,7 @@ const getAbsoultePath: (href: string) => string = href => {
  * 监听浏览器回退事件
  * @param actionToDo
  */
-const pageBackFromNextPage = (actionToDo: ACTIONTODO): void => {
+const pageBackFromNextPage = (actionToDo: TActionToDo): void => {
 
     // pageshow
     // UA.android && window.addEventListener('focus', actionToDo, false);
@@ -85,7 +85,7 @@ const pageBackFromNextPage = (actionToDo: ACTIONTODO): void => {
  * 获取URL 参数对象
  */
 
-const getRequestParams: GetRequestParamsI = (query) => {
+const getRequestParams: IGetRequestParams = (query) => {
     let search = query.trim().replace(/^[?#&]/, '') || window.location.search.substring(1);
     return search ? JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) {
         return key === "" ? value : decodeURIComponent(value);
