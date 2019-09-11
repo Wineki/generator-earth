@@ -402,7 +402,6 @@ module.exports = class extends Generator {
 
                     break;
 
-            case 'react-ant':
             case 'react-ant-multi-pages':
             case 'react-ant-ts':
 
@@ -429,8 +428,8 @@ module.exports = class extends Generator {
                 // Copy all dotfiles
                 // antd pc用cdn形式，不采用babel-plugin
                 this.fs.copy(
-                    this.templatePath('./.babelrc'),
-                    outPutUrl + '.babelrc'
+                    this.templatePath('./.babelrc.js'),
+                    outPutUrl + '.babelrc.js'
                 );
 
                 this.fs.copyTpl(
