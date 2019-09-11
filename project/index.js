@@ -329,8 +329,8 @@ module.exports = class extends Generator {
                     outPutUrl + '.editorconfig'
                 );
                 this.fs.copyTpl(
-                    this.templatePath(`../_babelrc`),
-                    outPutUrl + '.babelrc'
+                    this.templatePath(`../_babelrc.js`),
+                    outPutUrl + '.babelrc.js'
                 );
 
 

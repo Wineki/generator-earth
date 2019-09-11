@@ -81,7 +81,7 @@
         "@types/react-dom": "^16.8.4",
         "@types/whatwg-fetch": "0.0.33",
         "@types/react-router-dom": "^4.3.4",
-        "earth-scripts": "^1.0.10"
+        "earth-scripts": "^3.0.1"
     },
     "proxy": "http://localhost:3001/"
 }
