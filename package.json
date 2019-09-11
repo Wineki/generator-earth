@@ -1,6 +1,6 @@
 {
   "name": "generator-earth",
-  "version": "2.0.10",
+  "version": "2.0.12",
   "files": [
     "app",
     "component",

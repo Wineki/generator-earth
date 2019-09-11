@@ -74,7 +74,7 @@
         "extends": "react-app"
     },
     "devDependencies": {
-        "earth-scripts": "^1.0.4"
+        "earth-scripts": "^3.0.1"
     },
     "proxy": "http://localhost:3001/"
 }
