@@ -20,6 +20,7 @@
     "dependencies": {
         "classnames": "^2.2.5",
         "core-js": "^2.5.7",
+        "fetch-jsonp": "^1.1.3",
         "history": "^4.7.2",
         "lm-bundle-loader": "^0.1.1",
         "lm-loading": "^0.2.1",
@@ -37,7 +38,8 @@
         "build": "earth-scripts build",
         "update": "earth-scripts update",
         "test": "earth-scripts test --env=jsdom",
-        "mock": "earth-scripts mock"
+        "mock": "earth-scripts mock",
+        "tslint": "tslint --project . src/**/*.ts src/**/*.tsx"
     },
     "jest": {
         "collectCoverageFrom": [
@@ -81,7 +83,15 @@
         "@types/react-dom": "^16.8.4",
         "@types/whatwg-fetch": "0.0.33",
         "@types/react-router-dom": "^4.3.4",
-        "earth-scripts": "^1.0.10"
+        "earth-scripts": "^1.0.10",
+        "pre-commit": "^1.2.2",
+        "tslint": "^5.20.0",
+        "tslint-config-airbnb": "^5.11.1",
+        "tslint-config-prettier": "^1.18.0",
+        "tslint-react": "^4.0.0"
     },
+    "pre-commit": [
+        "tslint"
+    ],
     "proxy": "http://localhost:3001/"
 }

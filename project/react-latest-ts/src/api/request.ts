@@ -1,3 +1,4 @@
+import fetchJsonp from 'fetch-jsonp';
 import {IResponse} from './interface'
 
 function parseJSON(response: any) {
@@ -75,7 +76,7 @@ export default {
 		            'Accept': 'application/json'
 				},
 				credentials: 'include',
-				body: stringifyParams(options)
+				body: JSON.stringify(options)
 			})
 			.then(checkStatus)
 			.then(parseJSON)
@@ -94,5 +95,27 @@ export default {
 	},
 	getParams: function(): object {
 		return params;
-	}
+	},
+    jsonp: function(url: string, params: object, success?, error?) {
+	    let conn: string;
+        if (url.indexOf('?') === -1) {
+            conn = '?'
+        } else if (/\?$/.test(url)) {
+            conn = ''
+        } else {
+            conn = '&'
+        }
+
+        url += conn + stringifyParams(params);
+
+        return fetchJsonp(url, {})
+            .then((response) => {
+                return response.json()
+            }).then(function(json) {
+                success && success(json || {});
+                return json || {};
+            }).catch(function(ex) {
+                error && error(ex || {});
+            })
+    }
 }

@@ -15,5 +15,5 @@
         "eofline": false,
         "no-string-literal":false
     },
-    "rulesDirectory": ["app", "config"]
+    "rulesDirectory": ["src", "config"]
 }
