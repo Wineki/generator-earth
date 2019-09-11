@@ -69,7 +69,7 @@ export default {
 		            'Accept': 'application/json'
 				},
 				credentials: 'include',
-				body: stringifyParams(options)
+				body: JSON.stringify(options)
 			})
 			.then(checkStatus)
 			.then(parseJSON)
