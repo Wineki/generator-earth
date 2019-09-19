@@ -1,33 +1,49 @@
-import React from 'react'
-import Loading from 'lm-loading'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+
+import Loading from 'lm-loading'
+
 import FooterBar from 'commons/FooterBar'
 
-const App = (props) => {
+class App extends Component {
 
-    return (
 
-        <div>
+    componentDidMount () {
 
-            { props.children }
+        console.log('in this stage you can setState safe');
 
-            <FooterBar />
-            <Loading
-                isShow={props.loadingData}
-                opacity={0.3}
-            />
+    }
 
-        </div>
+    componentWillUnmount () {
 
-    )
+        console.log('dont forget clear timer or remove listener');
 
-};
+    }
+
+
+    render () {
+
+
+        return (
+
+            <div>
+                <Loading isShow={ this.props.showState }/>
+                <FooterBar/>
+            </div>
+
+
+        )
+
+    }
+
+}
+
 
 const mapStateToProps = (state) => {
 
     return {
 
-        loadingData: state.loadingData
+        showState: state.toastData.showState
 
     }
 

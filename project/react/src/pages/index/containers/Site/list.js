@@ -1,45 +1,48 @@
 import React, { Component } from 'react'
 import ListItem from '../../components/ListItem'
 
+//长页面滚动 位置记录
 let scrollSite = 0;
 
 class List extends Component {
 
-	componentDidMount () {
+    componentDidMount () {
 
-		window.scrollTo(0, scrollSite)
+        //回到之前浏览的位置
+        window.scrollTo(0, scrollSite);
 
-	}
+    }
 
-	componentWillUnmount () {
+    componentWillUnmount () {
 
-		scrollSite = window.scrollY;
+        //长页面滚动 位置记录
+        scrollSite = window.scrollY;
 
-	}
+    }
 
-	render () {
+    render () {
 
-		const { listData } = this.props;
+        const { listData } = this.props;
 
-		return (
+        return (
 
-			<div>
+            <div>
 
-				{
+                {
 
-					listData.map((item) => {
+                    listData.map((item) => {
 
-						return <ListItem key={item.id} title={item.title} id={item.id}/>
+                        return <ListItem key={item.id} title={item.title} id={item.id}/>
 
-					})
+                    })
 
-				}
+                }
 
-			</div>
+            </div>
 
-		)
+        )
 
-	}
+    }
 
 }
 

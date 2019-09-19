@@ -1,74 +1,61 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchListData } from '../../actions/list'
 import ListItem from '../../components/ListItem'
 
+//长页面滚动 位置记录
 let scrollSite = 0;
 
 class List extends Component {
 
-	componentDidMount () {
 
-		const { listData } = this.props;
+    componentDidMount () {
 
-		window.scrollTo(0, scrollSite)
+        //回到之前浏览的位置
+        window.scrollTo(0, scrollSite)
 
-		if (listData&&listData.length > 0) return;
+    }
 
-		this.props.setListData();
+    componentWillUnmount () {
 
-	}
+        //长页面滚动 位置记录
+        scrollSite = window.scrollY;
 
-	componentWillUnmount () {
+    }
 
-		scrollSite = window.scrollY;
 
-	}
+    render () {
 
-	render () {
+        const { listData } = this.props;
 
-		const { listData } = this.props;
+        return (
 
-		return (
+            <div>
 
-			<div>
+                {
 
-				{
+                    listData.map((item) => {
 
-					listData.map((item) => {
+                        return <ListItem key={item.id} title={item.title} id={item.id}/>
 
-						return <ListItem key={item.id} title={item.title} id={item.id}/>
+                    })
 
-					})
+                }
 
-				}
+            </div>
 
-			</div>
+        )
 
-		)
-
-	}
+    }
 
 }
 
+
 const mapStateToProps = (state) => {
 
-	return {
-
-		listData: state.listData
-
-	}
+    return {
+        listData: state.listData
+    }
 
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-
-	return {
-
-		setListData: (...args) => dispatch(fetchListData(...args))
-
-	}
-
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default connect(mapStateToProps)(List);

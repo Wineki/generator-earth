@@ -1,2 +1,7 @@
 export const initListData = [];
-export const initLoadingShow = false;
+export const initToastData = {
+
+	toastType: 'Hint',
+	showState: false
+
+};

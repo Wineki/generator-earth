@@ -112,14 +112,11 @@ module.exports = class extends Generator {
             message: '框架选型',
             type: 'list',
             choices: [{
-                name: 'React-latest',
-                value: 'react-latest'
-            }, {
                 name: 'React',
                 value: 'react'
             }, {
-                name: 'React-latest-ts',
-                value: 'react-latest-ts'
+                name: 'React-ts',
+                value: 'react-ts'
             }],
             when: answer => answer.projectType === 'h5'
 
@@ -129,17 +126,17 @@ module.exports = class extends Generator {
             message: '框架选型',
             type: 'list',
             choices: [
-            // jiajianrong 20190516 不再提供单页
-            /*{
-                name: 'React-ant',
-                value: 'react-ant'
-            }, */{
-                name: 'React-ant-multi-pages',
-                value: 'react-ant-multi-pages'
-            }, {
-                name: 'React-ant-ts',
-                value: 'react-ant-ts'
-            }],
+                // jiajianrong 20190516 不再提供单页
+                /*{
+                    name: 'React-ant',
+                    value: 'react-ant'
+                }, */{
+                    name: 'React-ant-multi-pages',
+                    value: 'react-ant-multi-pages'
+                }, {
+                    name: 'React-ant-ts',
+                    value: 'react-ant-ts'
+                }],
             when: answer => answer.projectType === 'pc'
 
         }, {
@@ -184,10 +181,7 @@ module.exports = class extends Generator {
             default: false,
             when: answer => {
                 // todo: react-ts暂未提供redux版
-                return (answer.projectType === 'h5' && (
-                    answer.frameType === 'react' ||
-                    answer.frameType === 'react-latest'
-                ))
+                return (answer.projectType === 'h5' && (answer.frameType === 'react'))
             }
 
         }, {
@@ -261,6 +255,37 @@ module.exports = class extends Generator {
 
     }
 
+    /**
+     * 公共文件拷贝
+     * @param option
+     * @private
+     */
+    _copyReactCommonFiles(option) {
+
+        const {outPutProjectFolder} = option;
+        const outPutUrl = outPutProjectFolder;
+
+        this.fs.copyTpl(
+            this.templatePath(`../_gitignore`),
+            outPutUrl + '.gitignore'
+        );
+        this.fs.copyTpl(
+            this.templatePath(`../_editorconfig`),
+            outPutUrl + '.editorconfig'
+        );
+        this.fs.copyTpl(
+            this.templatePath(`../_babelrc.js`),
+            outPutUrl + '.babelrc.js'
+        );
+
+
+        //add test
+        this.fs.copyTpl(
+            this.templatePath(`../../common/__test__`),
+            `${outPutUrl}src/__test__/`
+        );
+    }
+
     writing() {
 
 
@@ -295,7 +320,6 @@ module.exports = class extends Generator {
 
 
             case 'react':
-            case 'react-latest':
 
                 if (this.useRedux) {
                     tplFile = `${this.frameType}-redux`;
@@ -320,20 +344,6 @@ module.exports = class extends Generator {
                     }
                 );
 
-                this.fs.copyTpl(
-                    this.templatePath(`../_gitignore`),
-                    outPutUrl + '.gitignore'
-                );
-                this.fs.copyTpl(
-                    this.templatePath(`../_editorconfig`),
-                    outPutUrl + '.editorconfig'
-                );
-                this.fs.copyTpl(
-                    this.templatePath(`../_babelrc.js`),
-                    outPutUrl + '.babelrc.js'
-                );
-
-
                 //add scss
                 this.fs.copyTpl(
                     this.templatePath(`../../common/scss_mixin`),
@@ -346,61 +356,58 @@ module.exports = class extends Generator {
                     `${outPutUrl}src/tools/utils/`
                 );
 
+                // commonFiles
+                this._copyReactCommonFiles({
+                    outPutProjectFolder: outPutUrl
+                });
+
+
                 break;
 
-            case 'react-latest-ts':
-                    // TODO: 支持redux
-                    // if (this.useRedux) {
-                    //     tplFile = `${this.frameType}-redux`;
-                    // } else {
-                    //     tplFile = `${this.frameType}`;
-                    // }
-                    tplFile = `${this.frameType}`;
+            case 'react-ts':
+                // TODO: 支持redux
+                // if (this.useRedux) {
+                //     tplFile = `${this.frameType}-redux`;
+                // } else {
+                //     tplFile = `${this.frameType}`;
+                // }
+                tplFile = `${this.frameType}`;
 
-                    tplPath = this.templatePath(`../${tplFile}`);
-                    this.fs.copyTpl(
-                        tplPath,
-                        outPutUrl,
-                        {
-                            name: this.name,
-                            author: this.author,
-                            frameType: this.frameType,
-                            email: this.email,
-                            version: this.version,
-                            desc: this.desc,
-                            groupName: this.groupName,
-                            resetCss: resetCss,
-                            flexibleStr: '<%= htmlWebpackPlugin.options.flexibleStr %>'
-                        }
-                    );
+                tplPath = this.templatePath(`../${tplFile}`);
+                this.fs.copyTpl(
+                    tplPath,
+                    outPutUrl,
+                    {
+                        name: this.name,
+                        author: this.author,
+                        frameType: this.frameType,
+                        email: this.email,
+                        version: this.version,
+                        desc: this.desc,
+                        groupName: this.groupName,
+                        resetCss: resetCss,
+                        flexibleStr: '<%= htmlWebpackPlugin.options.flexibleStr %>'
+                    }
+                );
 
-                    this.fs.copyTpl(
-                        this.templatePath(`../_gitignore`),
-                        outPutUrl + '.gitignore'
-                    );
-                    this.fs.copyTpl(
-                        this.templatePath(`../_editorconfig`),
-                        outPutUrl + '.editorconfig'
-                    );
-                    this.fs.copyTpl(
-                        this.templatePath(`../_babelrc.js`),
-                        outPutUrl + '.babelrc.js'
-                    );
+                //add scss
+                this.fs.copyTpl(
+                    this.templatePath(`../../common/scss_mixin`),
+                    `${outPutUrl}src/scss_mixin/`
+                );
 
+                //add utils 语法糖
+                this.fs.copyTpl(
+                    this.templatePath(`../../common/utils-ts`),
+                    `${outPutUrl}src/tools/utils/`
+                );
 
-                    //add scss
-                    this.fs.copyTpl(
-                        this.templatePath(`../../common/scss_mixin`),
-                        `${outPutUrl}src/scss_mixin/`
-                    );
+                // commonFiles
+                this._copyReactCommonFiles({
+                    outPutProjectFolder: outPutUrl
+                });
 
-                    //add utils 语法糖
-                    this.fs.copyTpl(
-                        this.templatePath(`../../common/utils-ts`), /* ts版utils */
-                        `${outPutUrl}src/tools/utils/`
-                    );
-
-                    break;
+                break;
 
             case 'react-ant-multi-pages':
             case 'react-ant-ts':
@@ -425,21 +432,10 @@ module.exports = class extends Generator {
                     }
                 );
 
-                // Copy all dotfiles
-                // antd pc用cdn形式，不采用babel-plugin
-                this.fs.copy(
-                    this.templatePath('./.babelrc.js'),
-                    outPutUrl + '.babelrc.js'
-                );
-
-                this.fs.copyTpl(
-                    this.templatePath(`../_gitignore`),
-                    outPutUrl + '.gitignore'
-                );
-                this.fs.copyTpl(
-                    this.templatePath(`../_editorconfig`),
-                    outPutUrl + '.editorconfig'
-                );
+                // commonFiles
+                this._copyReactCommonFiles({
+                    outPutProjectFolder: outPutUrl
+                });
 
                 break;
 

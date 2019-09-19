@@ -1,29 +1,42 @@
 import request from 'api/request'
-import { changeLoadingState } from './common_loading'
+import { changeToastState } from './common_toast'
 
 export const FETACH_LIST_DATA = 'FETACH_LIST_DATA';
 
 export const fetchListData = () => {
 
-    return (dispatch, getState) => {
+	return (dispatch, getState) => {
 
-        dispatch(changeLoadingState(true));
+		dispatch(changeToastState({
 
-        request.post('/test/aaa', {})
-            .then((data) => {
+			showState: true,
+			toastType: 'Loading'
 
+		}))
+
+		request.post('/test/listDate', {})
+		.then((data) => {
+
+		    setTimeout(() => {
                 dispatch ({
 
                     type: FETACH_LIST_DATA,
                     data: data
 
-                });
+                })
 
 
-                dispatch(changeLoadingState(false));
+                dispatch(changeToastState({
 
-            })
+                    showState: false
 
-    }
+                }))
+            }, 3000)
+
+
+
+		})
+
+	}
 
 };

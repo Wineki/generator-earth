@@ -1,5 +1,5 @@
 @import '~scss/_mixins';
-.footer-bar {
+.m-footer-bar {
 
     position: fixed;
     bottom: 0;
@@ -8,8 +8,9 @@
     width: 100%;
     justify-content: space-around;
     align-items: center;
+    background: red;
 
-    >a {
+    > a {
 
         display: block;
         flex: 1;
@@ -22,10 +23,14 @@
 
     }
 
-    .selected {
+    .tab-selected {
 
         color: #000;
 
     }
 
 }
+
+
+
+

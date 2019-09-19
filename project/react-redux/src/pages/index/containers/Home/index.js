@@ -3,16 +3,16 @@ import HomeLogo from '../../components/HomeLogo'
 
 const Home = () => {
 
-	return (
+    return (
 
-		<div>
+        <div>
 
-			<HomeLogo />
-			{`hello world im HomePage111`}
+            <HomeLogo />
+            {`hello world im HomePage`}
 
-		</div>
+        </div>
 
-	)
+    )
 
 };
 

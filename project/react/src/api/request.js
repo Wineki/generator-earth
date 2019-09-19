@@ -47,7 +47,7 @@ export default {
 				headers: {
 					'cache-control': 'no-cache',
 		            'referer-url': window.location.href,
-		            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+		            'Content-Type': 'application/json; charset=utf-8',
 		            'Accept': 'application/json'
 				},
 				credentials: 'include'
@@ -65,7 +65,7 @@ export default {
 				headers: {
 					'cache-control': 'no-cache',
 		            'referer-url': window.location.href,
-		            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+		            'Content-Type': 'application/json; charset=utf-8',
 		            'Accept': 'application/json'
 				},
 				credentials: 'include',

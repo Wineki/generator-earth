@@ -1,6 +1,6 @@
 @import '~scss/_mixins';
 .list-item {
-
+    @include flex();
 	display: block;
 	width: 100%;
 	height: 40px;

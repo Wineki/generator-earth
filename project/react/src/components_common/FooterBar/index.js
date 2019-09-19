@@ -1,21 +1,21 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { NavLink, withRouter } from 'react-router-dom'
 import './index.scss';
 
-const FooterBar = () => {
+const FooterBar = (/*{match, location, history}*/) => {
 
     return (
 
-    	<div className="footer-bar">
+        <div className='m-footer-bar'>
 
-    		<Link to='/home' activeClassName="selected">tab1</Link>
-        	<Link to='/site' activeClassName="selected">tab2</Link>
-        	<Link to='/my' activeClassName="selected">tab3</Link>
+            <NavLink to='/home' activeClassName='tab-selected'>tab1</NavLink>
+            <NavLink to='/site' activeClassName='tab-selected'>tab2</NavLink>
+            <NavLink to='/my' activeClassName='tab-selected'>tab3</NavLink>
 
-    	</div>
+        </div>
 
     )
 
 };
 
-export default FooterBar
+export default withRouter(FooterBar)

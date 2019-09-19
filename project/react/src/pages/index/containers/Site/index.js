@@ -1,33 +1,44 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import {
+    Route,
+    Switch
+} from 'react-router-dom'
+
+import Loading from 'lm-loading'
+
 import request from 'api/request'
+
+
+// bundleLoader
+import BundleLoader from 'lm-bundle-loader'
+
+
+import List from './list'
+const Detail = () => import('./detail' /* webpackChunkName:"site_detail" */);
+
 
 class Site extends Component {
 
-    static propTypes = {
-
-        highlighted: PropTypes.bool
-
-    };
-
-    static contextTypes = {
-
-        loadingChangeHandle: PropTypes.func
-
-    };
 
     constructor (props) {
 
         super(props);
         this.state = {
 
-            listData: []
+            listData: [],
+            loadingShow: false
 
         };
+
+
+        this._isMounted = false;
+        this.loadingChangeHandle = this.loadingChangeHandle.bind(this);
 
     }
 
     componentDidMount () {
+
+        this._isMounted = true;
 
         const { listData } = this.state;
 
@@ -37,35 +48,60 @@ class Site extends Component {
 
     }
 
+    componentWillUnmount () {
+
+        this._isMounted = false;
+
+        console.log('dont forget clear timer or remove listener');
+
+    }
+
+    loadingChangeHandle (showState) {
+
+        this.setState({
+            loadingShow: showState
+        });
+
+    }
+
     fetchListData () {
 
-        const { loadingChangeHandle } = this.context;
-
-        loadingChangeHandle(true)
+        this.loadingChangeHandle(true);
 
         request.post('/test/aaa', {})
             .then((data) => {
 
-                this.setState({ listData: data })
-                loadingChangeHandle(false)
+                this.loadingChangeHandle(false);
+
+                this._isMounted && this.setState({ listData: data })
 
             })
 
     }
 
-    mergePropsToChildren () {
-
-        const { children } = this.props;
-
-        return React.cloneElement(children, { listData: this.state.listData })
-
-    }
 
     render () {
 
-        const cloneChildren = this.mergePropsToChildren();
+        const { match } = this.props;
+        const { listData, loadingShow } = this.state;
 
-        return cloneChildren
+        return (
+            <div>
+                <Switch>
+                    <Route exact path={`${match.path}`} render={routeProps => {
+                        return <List listData={listData} />
+                    }}/>
+                    <Route
+                        path={`${match.path}/:id`}
+                        render={
+                            (props) => BundleLoader(Detail, props)
+                        }
+                    />
+                </Switch>
+                <Loading isShow={loadingShow} />
+            </div>
+
+        )
 
     }
 

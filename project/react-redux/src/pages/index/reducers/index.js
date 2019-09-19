@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
 import { listData } from './list';
-import { loadingData } from './loading';
+import { toastData } from './toast';
 
 const newsApp = combineReducers({
 
     listData,
-    loadingData
+    toastData
 
 });
 
