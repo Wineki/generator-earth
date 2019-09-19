@@ -15,6 +15,14 @@ const getWrapper = (props = {}) => {
     };
 };
 
+/* 
+    1.是否正常渲染
+    2.测试分支渲染
+    3.测试props传递
+    4.测试事件触发
+    5.测试函数调用
+ */
+
 describe('测试reactBase', () => {
     it('测试正常渲染', () => {
         const { wrapper } = getWrapper(); // 获取react组件
@@ -39,7 +47,7 @@ describe('测试reactBase', () => {
         expect(wrapper.find('.is-modal.classname')).toHaveLength(1); // 主要看 props中 className 属性是否在组件中正确赋值上。
     })
 
-   /*  it('测试事件触发', () => {
+    it('测试事件触发', () => {
         const props = {
             className: 'classname',
             isModal: true,
@@ -56,7 +64,7 @@ describe('测试reactBase', () => {
         expect(handleTestClickSpy).toHaveBeenCalled(); // onClick 事件触发后会调用组件中的test方法，验证test方式是否被调用
         expect(props.onClick).toHaveBeenCalled(); // onClick 事件触发后会调用props 中的onClick方法，验证props 中的onClick方式是否被调用
         expect(props.onClick.mock.calls[0][0]).toBe(props.className); // 验证props onClick方法第一次调用的第一个参数
-    }) */
+    })
 
     it('测试函数调用', () => {
         const props = {

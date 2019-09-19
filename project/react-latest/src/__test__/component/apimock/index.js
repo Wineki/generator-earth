@@ -1,5 +1,5 @@
 import React from 'react';
-import request from '../../utils/request';
+import request from './request';
 
 class Index extends React.Component {
   constructor(props) {

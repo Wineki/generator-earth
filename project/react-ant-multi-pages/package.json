@@ -39,7 +39,7 @@
         "start": "earth-scripts start",
         "build": "earth-scripts build",
         "update": "earth-scripts update",
-        "test": "earth-scripts test --watchAll",
+        "test": "earth-scripts test --watch",
         "mock": "earth-scripts mock"
     },
     "eslintConfig": {
