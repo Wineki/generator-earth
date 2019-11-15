@@ -1,103 +1,101 @@
-import * as React from 'react';
-import * as moment from 'moment';
-import { Form, DatePicker } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
-import { getUUID } from 'ROOT_SOURCE/utils'
+import React from 'react';
+import moment from 'moment';
+import { Form, DatePicker, Col } from 'antd';
+import { WrappedFormUtils } from 'antd/lib/form/Form'
+
 
 const FormItem = Form.Item;
 
 
-const formItemLayout = {
-    labelCol: {
-        xs: {span: 16},
-        sm: {span: 8},
-    }
-};
+type momentType = moment.Moment | null | undefined;
 
 
-export interface Props extends FormComponentProps {
-    startKey: string;
-    startVal: string;
-    endKey: string;
-    endVal: string;
-    showTime?: boolean;
-    label?: string;
-    formItemLayout: any;
-    className?: string;
-    dateShowFormat?: string;
-    extraParams?: any;
-    DeleteNode: React.ReactNode | JSX.Element | any;
-    extraSeparation?: string;
+/**
+ * 定义父组件调用DateRangePicker时需要传入的props
+ */
+interface DateRangePickerProps {
+    dateShowFormat?: any,
+    form: WrappedFormUtils,
+    startVal?: moment.MomentInput,
+    startKey: string,
+    endVal?: moment.MomentInput,
+    endKey: string,
 }
 
-export default class extends React.Component<Props> {
+
+/**
+ * 定义DateRangePicker的state
+ */
+interface DateRangePickerState {
+    startValue: momentType,
+    endValue: momentType,
+    endOpen: boolean,
+    [K: string]: momentType | boolean,
+}
+
+
+
+
+
+export default class DateRangePicker extends React.Component<DateRangePickerProps, DateRangePickerState> {
     state = {
-        startValue: '',
-        endValue: '',
+        startValue: null,
+        endValue: null,
         endOpen: false,
     };
 
-    disabledStartDate = (startValue) => {
+    disabledStartDate = (startValue: momentType) => {
         const endValue = this.state.endValue;
         if (!startValue || !endValue) {
             return false;
         }
-        return startValue.valueOf() > endValue.valueOf();
+        return (startValue as moment.Moment).valueOf() > (endValue as moment.Moment).valueOf();
     }
 
-    disabledEndDate = (endValue) => {
+    disabledEndDate = (endValue: momentType) => {
         const startValue = this.state.startValue;
         if (!endValue || !startValue) {
             return false;
         }
-        return endValue.valueOf() <= startValue.valueOf();
+        return (endValue as moment.Moment).valueOf() <= (startValue as moment.Moment).valueOf();
     }
 
-    onChange = (field, value) => {
+    onChange = (field: string, value: momentType) => {
         this.setState({
             [field]: value,
         });
     }
 
-    onStartChange = (value) => {
+    onStartChange = (value: momentType) => {
         this.onChange('startValue', value);
     }
 
-    onEndChange = (value) => {
+    onEndChange = (value: momentType) => {
         this.onChange('endValue', value);
     }
 
-    handleStartOpenChange = (open) => {
+    handleStartOpenChange = (open: boolean) => {
         if (!open) {
-            this.setState({endOpen: true});
+            this.setState({ endOpen: true });
         }
     }
 
-    handleEndOpenChange = (open) => {
-        this.setState({endOpen: open});
+    handleEndOpenChange = (open: boolean) => {
+        this.setState({ endOpen: open });
     }
 
     render() {
-        const {form, startVal, extraSeparation, label, endVal, DeleteNode} = this.props;
-        let {startKey, endKey} = this.props;
-        const {startValue, endValue, endOpen} = this.state;
-
+        const { form, startKey, startVal, endKey, endVal } = this.props;
+        const { startValue, endValue, endOpen } = this.state;
+        
         const dateShowFormat = this.props.dateShowFormat || "YYYY-MM-DD HH:mm:ss";
-
-
-        const wrapProps = {className: this.props.className};
-
-        // 这个key在设置的时候可能会被删完  这里需要设置一个默认值
-        startKey = startKey || getUUID();
-        endKey = endKey || getUUID();
-
-
+        
         return (
-            <div {...wrapProps}>
-                <div className="ant-form-item costom-date-range">
-                    <FormItem colon={false} label={label}>
+            <div>
+                <Col span={11}>
+                    <FormItem>
                         {form.getFieldDecorator(startKey, {
-                            initialValue: startValue || (startVal && moment(startVal)) || undefined
+                            initialValue: startValue || (startVal && moment(startVal)) || ''
                         })(<DatePicker
                             placeholder="开始时间"
                             format={dateShowFormat}
@@ -106,30 +104,30 @@ export default class extends React.Component<Props> {
                             onChange={this.onStartChange}
                             onOpenChange={this.handleStartOpenChange}
                             style={{
-                                width: 300
-                            }}/>)}
-
+                                width: '100%'
+                            }} />)}
                     </FormItem>
-
-                    <span className="center-hr"> {extraSeparation ? extraSeparation : '至'} </span>
-
-                    <FormItem {...formItemLayout} colon={false}>
+                </Col>
+                <Col span={1}>
+                    <span> - </span>
+                </Col>
+                <Col span={12}>
+                    <FormItem>
                         {form.getFieldDecorator(endKey, {
-                            initialValue: endValue || (endVal && moment(endVal)) || undefined
+                            initialValue: endValue || (endVal && moment(endVal)) || ''
                         })(<DatePicker
-                            placeholder="结束时间"
-                            format={dateShowFormat}
-                            showTime
-                            disabledDate={this.disabledEndDate}
-                            onChange={this.onEndChange}
-                            open={endOpen}
-                            onOpenChange={this.handleEndOpenChange}
-                            style={{
-                                width: 300
-                            }}/>)}
+                                placeholder="结束时间"
+                                format={dateShowFormat}
+                                showTime
+                                disabledDate={this.disabledEndDate}
+                                onChange={this.onEndChange}
+                                open={endOpen}
+                                onOpenChange={this.handleEndOpenChange}
+                                style={{
+                                    width: '100%'
+                                }} />)}
                     </FormItem>
-                </div>
-                {DeleteNode && <DeleteNode/>}
+                </Col>
             </div>
         );
     }

@@ -1,29 +1,26 @@
-import * as uuid from 'uuid/v4';
+import store from './store'
+import { GLOBAL_LOADING } from 'ROOT_SOURCE/actions/framework'
 
-export const sleep = (n): Promise<any> => {
-    return new Promise(resolve => {
-        setTimeout(() => resolve(), n);
+
+
+export const sleep = (n: number) => {
+    return new Promise(resolve=>{
+        setTimeout( ()=>resolve(), n )
     })
 }
 
 
-/**
- * 获取一个随机串
- */
-export const getUUID = (): string => {
-    const id: string = uuid();
-
-    return id.replace(/-/ig, '');
+export const startLoadingAnimation = () => {
+    store.dispatch({
+        type: GLOBAL_LOADING,
+        payload: true,
+    })
 }
 
 
-export const createURL = (url: string, param: Object): string => {
-    let urlLink = '';
-    for (let key in param) {
-        let link = `&${key}=${param[key]}`;
-        urlLink += link;
-    }
-
-    urlLink = url + '?' + urlLink.substr(1);
-    return urlLink.replace(' ', '');
+export const stopLoadingAnimation = () => {
+    store.dispatch({
+        type: GLOBAL_LOADING,
+        payload: false,
+    })
 }

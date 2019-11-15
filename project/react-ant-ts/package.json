@@ -1,59 +1,54 @@
 {
-    "name": "<%= name %>",
-    "version": "<%= version %>",
-    "private": true,
-    "author": {
-        "name": "<%= author %>",
-        "email": "<%= email %>"
-    },
-    "repository": {
-        "type": "git",
-        "url": "http://gitlab.xxx.com/groups/<%= groupName %>/<%= name %>"
-    },
-    "group": "<%= groupName %>",
-    "type": "<%= frameType %>",
-    "keywords": [
-        "earth",
-        "react",
-        "<%= name %>"
-    ],
-    "dependencies": {
-        "antd": "3.1.0",
-        "lodash": "4.17.5",
-        "mobx": "^5.9.4",
-        "mobx-react": "^5.4.3",
-        "moment": "2.22.1",
-        "prop-types": "15.5.10",
-        "query-string": "^5.0.1",
-        "react": "16.4.2",
-        "react-dom": "16.4.2",
-        "react-loadable": "^5.5.0",
-        "react-router-dom": "^4.2.2",
-        "redux": "^3.7.2",
-        "redux-thunk": "^2.2.0",
-        "typescript": "^3.4.1"
-    },
-    "scripts": {
-        "start": "earth-scripts start",
-        "build": "earth-scripts build",
-        "update": "earth-scripts update",
-        "test": "earth-scripts test --env=jsdom",
-        "mock": "earth-scripts mock"
-    },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
-    "mockRoot": "mock_server.js",
-    "proxy": {
-        "/nodeapi": {
-            "target": "http://127.0.0.1:8004"
-        },
-        "/test": {
-            "target": "http://127.0.0.1:8004"
-        }
-    },
-    "devDependencies": {
-        "@types/react": "^16.7.20",
-        "earth-scripts": "^3.0.1"
-    }
+  "name": "pc-demo",
+  "version": "1.0.0",
+  "private": true,
+  "author": {
+    "name": "jiajianrong",
+    "email": "abc@588.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://gitlab.xxx.com/groups/FFF-team/pc-demo"
+  },
+  "group": "FFF-team",
+  "type": "react-ant-multi-pages",
+  "keywords": [
+    "earth",
+    "react",
+    "pc-demo"
+  ],
+  "dependencies": {
+    "antd": "3.24.0",
+    "lodash": "4.17.5",
+    "moment": "2.22.1",
+    "prop-types": "15.5.10",
+    "query-string": "5.1.1",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "react-redux": "5.1.1",
+    "react-router-dom": "4.3.1",
+    "redux": "4.0.4",
+    "redux-saga": "1.0.2",
+    "redux-thunk": "2.3.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.144",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-redux": "^7.1.2",
+    "@types/react-router-dom": "^4.3.4",
+    "earth-scripts": "^3.0.0"
+  },
+  "scripts": {
+    "start": "earth-scripts start",
+    "build": "earth-scripts build",
+    "update": "earth-scripts update",
+    "test": "earth-scripts test --env=jsdom",
+    "mock": "earth-scripts mock"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "mockRoot": "mock_server.js",
+  "proxy=>moved-to-/src/setupProxy.js": "http://127.0.0.1:8004"
 }

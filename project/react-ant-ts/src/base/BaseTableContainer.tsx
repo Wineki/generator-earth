@@ -1,114 +1,73 @@
-import * as React from 'react'
-import { Form, Table } from 'antd'
-import { observer } from 'mobx-react';
-import { toJS } from 'mobx';
+import React from 'react'
+import { Table } from 'antd'
+import { TableProps, ColumnProps } from 'antd/lib/table'
+
 import { CURRENT_PAGE, PAGE_SIZE, TOTAL } from './BaseConfig'
-import { AllDataSourceParams, Pagination } from 'ROOT_SOURCE/interface/common';
 import BaseContainer from './BaseContainer'
-import { INIT_PAGINATION } from 'ROOT_SOURCE/components/common-table-list';
-import * as moment from 'moment';
-
-@observer
-export default class extends BaseContainer {
-    /**
-     * 获取数据 外部可调用
-     * @param params 查询参数
-     */
-    readonly getData = async (params = {}) => {
-        const {getFieldsValue} = this.props.form;
-
-        let values = getFieldsValue();
 
 
-        values = {
-            ...values,
-            ...params
-        }
+/**
+ * 默认Props
+ */
+export type IDefaultTableProps = {
+    updateTable: (params?: any) => any,
+    resetTable? : Function,
+    formData?: any,
+    tableData: {dataSource?: Array<any>, [propName: string]: any},
+}
 
-        values = this.transformRequest(values);
-
-        await this.props.getData(values);
-    }
-
-    /**
-     * 用于处理请求前的参数转换，可自定义实现
-     * 请求前的参数处理
-     * 比如说为空 或者 时间转换成字符串
-     * @param params
-     */
-    transformRequest(values) {
-        // TODO 临时处理
-        for (const key in values) {
-            if (!values[key]) {
-                values[key] = '';
-            }
-            if (moment.isMoment(values[key])) {
-                values[key] = moment(values[key]).format('YYYY-MM-DD');
-            }
-
-        }
-
-        return values;
-    }
-
-    /**
-     * 获取当前本项目的相关数据
-     * @desc 具体哪些字段 请查看AllDataSourceParams
-     */
-    getLocalData = (): AllDataSourceParams => {
-        return toJS(this.props.store.allDataSource[this.props.sourceId])
-    }
+/**
+ * ITableProps4List 将 BaseTableContainer 接收的泛型
+ * 转义为 BaseContainer 要求的(泛型)格式
+ */
+export type ITableProps4List<T, R> = IDefaultTableProps & T & TableProps<R>
 
 
-    /**
-     * 额外的展开行
-     */
-    getExpandedRowRender = () => {
-        return false;
-    }
-
+/**
+ * 子类可以覆盖(重写) BaseTableContainer 里的任何方法
+ */
+export default class BaseTableContainer<TExtraTableProps, Record> extends 
+BaseContainer<ITableProps4List<TExtraTableProps, Record>> {
+    
     /**
      * table的标题
      * @override
      */
-    getTitle = (): React.ReactNode | null | any => null
-
-
+    getTitle = () => (
+        ''
+        //throw 'getTitle must be overriden to return a string'
+    )
+    
+    
     /**
      * table的列对象
-     * 必须在派生类中实现
      * @override
      */
-    getColumns() {
-        throw new Error('getColumns must be overriden to return an array');
-    };
-
-
+    getColumns(): ColumnProps<Record>[] {
+        throw new Error('getColumns must be overriden to return an array')
+    }
+    
+    
     /**
      * table row唯一标识字段
      * @override
      */
-    getRowKey(record, index) {
-        return index
+    getRowKey(record: Record, index: number): string {
+        return index+''
+        //throw new Error('getRowKey must be overriden to return a string')
     }
-
-
+    
+    
     /**
      * table数据源
      * @override
      * 默认使用reducer数据
      */
-    getDataSource(): Array<any> {
-        const state = this.props.store.allDataSource[this.props.sourceId];
-
-        if (state) {
-            return state.list;
-        }
-
-        return []
+    getDataSource() {
+        return this.props.tableData.dataSource
     }
-
-
+    
+    
     /**
      * table分页信息
      * @override
@@ -116,30 +75,35 @@ export default class extends BaseContainer {
      * 转换为
      * antd.pagination {pageSize, current, total}
      */
-    getPagination(): Pagination {
-        const dataBase: any = toJS(this.props.store.allDataSource[this.props.sourceId]);
-
+    getPagination() {
         return {
-            pageSize: dataBase[PAGE_SIZE],
-            current: dataBase[CURRENT_PAGE],
-            total: dataBase[TOTAL],
-            showTotal: total => `共 ${total} 条数据`
+            pageSize: this.props.formData[PAGE_SIZE],
+            current: this.props.formData[CURRENT_PAGE],
+            total: this.props.formData[TOTAL],
         }
     }
-
-
+    
+    
     /**
      * 分页，排序，筛选回调
      * 目前需求仅为分页
      */
-    handleTableChange = async ({current, pageSize}) => {
-        await this.getData({
-            pageSize,
-            pageNo: current
-        });
+    handleTableChange = async (pagination) => {
+        // 重置table
+        this.props.resetTable && this.props.resetTable()
+        
+        // 提交表单最好新一个事务，不受其他事务影响
+        await this.sleep()
+        
+        this.props.updateTable && this.props.updateTable({
+            ...this.props.formData,
+            [CURRENT_PAGE]: pagination.current //pagination选中另一页面
+        })
     }
-
-
+    
+    
+    
+    
     /**
      * 表格的子组件，通常用于表格相关的弹窗
      * @override
@@ -147,83 +111,45 @@ export default class extends BaseContainer {
     getTableExtraContent() {
         return null
     }
-
-
+    
+    
     /**
      * 是否有滚动条
      * @override
      */
-    getScroll() {
+    getScroll(): { x?: boolean, y?: boolean } {
         return {
-            x: true
+            x: false,
+            y: false,
         }
     }
-
-
+    
+    
     /**
      * 选择框，用于批量操作
      * @override
      */
-    rowSelection() {
-        return null
+    rowSelection(){
+        return undefined
     }
-
-
-    /**
-     * 提交表单
-     * @override
-     */
-    submitForm = async (e) => {
-        e && e.preventDefault()
-
-        // 查询的时候page信息初始化为1
-        await this.getData(INIT_PAGINATION);
-    }
-
-    formProps() {
-        return {};
-    }
-
-    /**
-     * 子搜索Item列表
-     * 必须实现
-     */
-    getSearchItems(): any {
-        throw new Error('getSearchItems must be overriden to return an array');
-    }
-
-    render() {
-        // expandedRowRender={this.getExpandedRowRender}
-
-        const Items: React.ReactNode | null = this.getSearchItems();
-
+    
+    
+    
+    render () {
         return (
-            <React.Fragment>
-
-                {Items && (
-                    <div className="ui-background">
-                        <Form {...this.formProps()} onSubmit={this.submitForm}>
-                            {Items}
-                        </Form>
-                    </div>
-                )}
-
-                <div className="ui-background clearfix">
-                    {this.getTableExtraContent()}
-                    <Table
-                        bordered
-                        title={this.getTitle()}
-                        rowKey={this.getRowKey}
-                        dataSource={this.getDataSource()}
-                        columns={this.getColumns() as any}
-                        onChange={this.handleTableChange}
-                        pagination={this.getPagination()}
-                        scroll={this.getScroll() as any}
-                        rowSelection={this.rowSelection() as any}
-                    />
-                </div>
-            </React.Fragment>
-
+            <div className="ui-background clearfix">
+                {this.getTableExtraContent()}
+                <Table
+                    title={this.getTitle}
+                    rowKey={this.getRowKey}
+                    dataSource={this.getDataSource()}
+                    columns={this.getColumns()}
+                    onChange={this.handleTableChange}
+                    pagination={this.getPagination()}
+                    scroll={this.getScroll()}
+                    rowSelection={this.rowSelection()}
+                />
+            </div>
         )
     }
 }

@@ -1,4 +1,4 @@
-import * as config from 'ROOT_SOURCE/projGlobalConfig'
+import config from 'ROOT_SOURCE/projGlobalConfig'
 
-export var isPostTypeJson = config.isPostTypeJson
+export const isPostTypeJson = config.isPostTypeJson
 

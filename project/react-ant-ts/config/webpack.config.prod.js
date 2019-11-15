@@ -8,7 +8,7 @@ module.exports = {
         alias: alias
     },
     output: {
-        publicPath: '//j1.58cdn.com.cn/jinrong/<project-name>',
+        publicPath: '//j1.58cdn.com.cn/jinrong/your-project',
         // publicPath: '.',
         // 如果不同资源用不同的cdn，则可以采用对象形式
         // publicPath: {

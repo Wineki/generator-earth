@@ -12,7 +12,7 @@
     line-height: 50px;
 }
 
-// form
+// form 
 .ant-form-item-control-wrapper {
     a {
         min-width: 30px;
@@ -31,13 +31,6 @@
          width: auto;
      }
      div {
-        display: flex;
+        display: flex;         
      }
  }
-
-
-// 不知为何spin不出动画
-.ant-spin-spinning .ant-spin-dot{
-    transform: rotate(45deg);
-    animation:antRotate 1.2s infinite linear;
-}

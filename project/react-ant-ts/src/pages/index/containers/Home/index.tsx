@@ -1,15 +1,10 @@
-/**
- * Created by Chuans on 2019/4/4
- * Author: Chuans
- * Github: https://github.com/chuans
- * Time: 10:15 AM
- */
-import * as React from 'react';
+import React from 'react'
 
-const Home = () => {
+export default (props) => {
+    const CONTAINER_ROUTE_PREFIX = props.match.path
+
     return (
-        <div>welcome home-2019</div>
+        <div>{`Welcome ${CONTAINER_ROUTE_PREFIX}`} </div>
     )
 };
 
-export default Home;

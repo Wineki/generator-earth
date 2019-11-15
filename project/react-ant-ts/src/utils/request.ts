@@ -1,15 +1,20 @@
+import { startLoadingAnimation, stopLoadingAnimation } from './index'
 import { isPostTypeJson } from './config'
+
+
 
 function stringifyParams(params) {
     if (!params) return null;
     return Object.keys(params).map((key) => (key + '=' + encodeURIComponent(params[key]))).join('&');
 }
 
+
 function checkStatus(response) {
-    if (response.status >= 200 && response.status < 300) {
+    if(response.status >= 200 && response.status < 300) {
         return response;
     } else {
-        const error:any = new Error(response.statusText);
+        const error = new Error(response.statusText);
+        // @ts-ignore
         error.response = response;
         throw error;
     }
@@ -23,96 +28,94 @@ const DEFAULT_HEADERS = {
     'Accept': 'application/json',
 }
 
-async function toJson(response){
-
-    if((response.headers.get('content-type') || '').indexOf('application/msexcel') > -1){
-        return response
-    }else{
-        return response.json();
-    }
-
-}
-
-
 /**
  * Requests a URL, returning a promise.
  */
-const request = {
-    get: function(url, params={}, headers={}) {
-        if (params && JSON.stringify(params) !== '{}') {
+export default {
+    get: function(url: string, params?: object, headers?: object) {
+        if (params && JSON.stringify(params)!=='{}') {
             url += '?' + stringifyParams(params)
         }
-
+        
+        startLoadingAnimation()
+        
         return fetch(url, {
-            method: 'get',
-            headers: Object.assign({}, DEFAULT_HEADERS, { 'referer-url': window.location.href }, headers),
+            method: "get",
+            headers: Object.assign( {}, DEFAULT_HEADERS, {'referer-url': window.location.href}, headers ),
             credentials: 'include'
         })
-            .then(checkStatus)
-            .then(toJson)
-            .then((res) => {
-                return res
-            })
-            .catch(err => {
-                return err
-            })
-    },
-    post: async function(url, params={}, headers = {}, isFormData = false,) {
-
-        let body:any = isPostTypeJson() ? JSON.stringify(params) : stringifyParams(params);
-        let defaultHeaders:any = DEFAULT_HEADERS;
-
-        if (isFormData) {
-            body = params;
-            defaultHeaders = {
-                'cache-control': 'no-cache',
-                'Accept': '*/*',
-            }
-        }
-
-        return fetch(url, {
-            method: 'post',
-            headers: Object.assign({}, defaultHeaders, { 'referer-url': window.location.href }, headers),
-            credentials: 'include',
-            body,
+        .then(checkStatus)
+        .then((response) => response.json())
+        .then((res) => {
+            stopLoadingAnimation()
+            return res
         })
-            .then(checkStatus)
-            .then(toJson)
-            .then((res) => {
-                return res
-            })
-            .catch(err => {
-                return err
-            })
+        .catch(err => {
+            stopLoadingAnimation()
+            return err
+        })
+    },
+    delete: function(url: string, params?: object, headers?: object) {
+        if (params && JSON.stringify(params)!=='{}') {
+            url += '?' + stringifyParams(params)
+        }
+        
+        startLoadingAnimation()
+        
+        return fetch(url, {
+            method: "delete",
+            headers: Object.assign( {}, DEFAULT_HEADERS, {'referer-url': window.location.href}, headers ),
+            credentials: 'include'
+        })
+        .then(checkStatus)
+        .then((response) => response.json())
+        .then((res) => {
+            stopLoadingAnimation()
+            return res
+        })
+        .catch(err => {
+            stopLoadingAnimation()
+            return err
+        })
+    },
+    post: function(url: string, params?: object, headers?: object): Promise<any> {
+        startLoadingAnimation()
+        
+        return fetch(url, {
+            method: "post",
+            headers: Object.assign( {}, DEFAULT_HEADERS, {'referer-url': window.location.href}, headers ),
+            credentials: 'include',
+            body: isPostTypeJson() ? JSON.stringify(params) : stringifyParams(params)
+        })
+        .then(checkStatus)
+        .then((response) => response.json())
+        .then((res) => {
+            stopLoadingAnimation()
+            return res
+        })
+        .catch(err => {
+            stopLoadingAnimation()
+            return err
+        })
+    },
+    put: function(url: string, params?: object, headers?: object) {
+        startLoadingAnimation()
+        
+        return fetch(url, {
+            method: "put",
+            headers: Object.assign( {}, DEFAULT_HEADERS, {'referer-url': window.location.href}, headers ),
+            credentials: 'include',
+            body: isPostTypeJson() ? JSON.stringify(params) : stringifyParams(params)
+        })
+        .then(checkStatus)
+        .then((response) => response.json())
+        .then((res) => {
+            stopLoadingAnimation()
+            return res
+        })
+        .catch(err => {
+            stopLoadingAnimation()
+            return err
+        })
     }
 }
-
-
-export const downloadFile = (url)=>{
-
-    return new Promise(async(resolve,reject)=>{
-        let res;
-        try{
-            res = await request.post(url);
-
-            let filename = res.headers.get('Content-Disposition').match(/filename=(.*)/) || []; //获取文件名
-            let blob = await res.blob();
-
-            const fileUrl = window.URL.createObjectURL(blob);
-            resolve();
-            let a = document.createElement('a');
-
-            a.href = fileUrl;
-            a.download = filename[1] || '文件.zip';
-            a.click();
-            window.URL.revokeObjectURL(fileUrl);
-
-        }catch(e){
-            reject(e)
-            return;
-        }
-    })
-}
-
-
-export default request

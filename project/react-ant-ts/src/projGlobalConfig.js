@@ -1,12 +1,9 @@
-const POST_TYPE_FORM = 'application/x-www-form-urlencoded; charset=utf-8'
-const POST_TYPE_JSON = 'application/json; charset=utf-8'
-
 /**
  * 本配置文件会同时被react及mock_server用到，由于nodejs尚未支持ES6 import/export
  * 所以这里使用ES5的module.exports
  */
 module.exports = {
-    
+
     isPostTypeJson: function () {
         return true
     },
@@ -41,6 +38,11 @@ module.exports = {
      * 这里我们最好设置一个统一解构的key值，方便框架将 res[RESPONSE_DESTRUST_KEY] 返回
      */
     RESPONSE_DESTRUST_KEY: 'data',
+    
+    
+    /**
+     * 此配置可以忽略，但请勿删除
+     */
     RESPONSE_LIST_DESTRUST_KEY: 'list'
     
 }

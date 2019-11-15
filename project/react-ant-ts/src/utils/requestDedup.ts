@@ -1,15 +1,16 @@
+import { startLoadingAnimation, stopLoadingAnimation } from './index'
 import { isPostTypeJson } from './config'
 
 /**
  * demo
- *
- *
+ * 
+ * 
 dedupRequest(url, request => {
     request.get(url).then(data => {
         console.log(data)
     })
 })
-
+        
  */
 
 
@@ -25,8 +26,9 @@ function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
     } else {
-        const error:Error = new Error(response.statusText);
-        error['response'] = response;
+        const error = new Error(response.statusText);
+        // @ts-ignore
+        error.response = response;
         throw error;
     }
 }
@@ -48,7 +50,9 @@ const methods = {
         if (params && JSON.stringify(params) !== '{}') {
             url += '?' + stringifyParams(params)
         }
-
+        
+        startLoadingAnimation()
+        
         return fetch(url, {
             method: "get",
             headers: Object.assign({}, DEFAULT_HEADERS, { 'referer-url': window.location.href }, headers),
@@ -60,19 +64,19 @@ const methods = {
                 return response.json()
             })
             .then((res) => {
-                // stopLoadingAnimation()
+                stopLoadingAnimation()
                 return res
             })
             .catch(err => {
                 unfinishedRequests[url] && delete unfinishedRequests[url]
-                // stopLoadingAnimation()
+                stopLoadingAnimation()
                 return err
             })
     },
     post: function(url, params, headers) {
-
-        // startLoadingAnimation()
-
+        
+        startLoadingAnimation()
+        
         return fetch(url, {
             method: "post",
             headers: Object.assign({}, DEFAULT_HEADERS, { 'referer-url': window.location.href }, headers),
@@ -85,12 +89,12 @@ const methods = {
                 return response.json()
             })
             .then((res) => {
-                // stopLoadingAnimation()
+                stopLoadingAnimation()
                 return res
             })
             .catch(err => {
                 unfinishedRequests[url] && delete unfinishedRequests[url]
-                // stopLoadingAnimation()
+                stopLoadingAnimation()
                 return err
             })
     }
@@ -104,7 +108,7 @@ const methods = {
 export const dedupRequest = (url, cb) => {
     if (unfinishedRequests[url]) return;
     unfinishedRequests[url] = true;
-
+    
     cb && cb(methods);
 };
 
