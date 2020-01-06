@@ -90,7 +90,21 @@ module.exports = class extends Generator {
                 name: 'nodejs',
                 value: 'nodejs'
 
+            }, {
+                name: 'MiniProgram',
+                value: 'miniprogram-ts'
             }]
+
+        }, {
+
+            name: 'frameType',
+            message: '框架选型',
+            type: 'list',
+            choices: [{
+                name: 'ts',
+                value: 'miniprogram-ts'
+            }],
+            when: answer => answer.projectType === 'miniprogram-ts'
 
         }, {
 
@@ -411,6 +425,7 @@ module.exports = class extends Generator {
 
             case 'react-ant-multi-pages':
             case 'react-ant-ts':
+            case 'miniprogram-ts':
 
                 tplFile = `${this.frameType}`;
 
@@ -438,7 +453,7 @@ module.exports = class extends Generator {
                 });
 
                 break;
-
+                
 
             default:
 

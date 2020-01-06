@@ -1,0 +1,6 @@
+{
+    "component": true,
+    "usingComponents": {
+        "cm-icon-add": "/components/icon-add/icon-add"
+    }
+}
