@@ -34,6 +34,7 @@
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-watch": "^4.0.2",
     "gulp": "^4.0.2",
+    "gulp-miniprogram-path-alias": "^0.3.1",
     "gulp-autoprefixer": "^6.1.0",
     "gulp-inject": "^5.0.4",
     "gulp-rename": "^1.4.0",

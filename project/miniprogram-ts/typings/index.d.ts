@@ -15,6 +15,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 export interface IAppOption {
     globalData: {
         userInfo?: wx.UserInfo,
+        extends?: any
     }
     userInfoReadyCallback?: wx.GetUserInfoSuccessCallback,
 }

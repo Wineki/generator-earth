@@ -29,6 +29,17 @@
     "types": [
       "node"
     ],
+    "baseUrl":".",
+    "paths":{
+      "ROOT_SOURCE/*": ["./*"],
+      "SRC/*":["./src/*"],
+      "UTILS/*":["./src/utils/*"],
+      "PAGES/*": ["./src/pages/*"],
+      "COMPONENTS/*": ["./src/components/*"],
+      "IMGS/*": ["./src/imgs/*"],
+      "CONFIGS/*": ["./src/config/*"],
+      "LIBS/*": ["./src/lib/*"]
+    }
   },
   "include": [
     "src/**/*.ts", "src/lib/wos_jssdk_v1.js"

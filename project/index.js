@@ -76,20 +76,14 @@ module.exports = class extends Generator {
             message: '项目类型',
             type: 'list',
             choices: [{
-
                 name: 'H5',
                 value: 'h5'
-
             }, {
-
                 name: 'PC',
                 value: 'pc'
-
             }, {
-
                 name: 'nodejs',
                 value: 'nodejs'
-
             }, {
                 name: 'MiniProgram',
                 value: 'miniprogram-ts'
@@ -144,10 +138,13 @@ module.exports = class extends Generator {
                 /*{
                     name: 'React-ant',
                     value: 'react-ant'
-                }, */{
+                }, */
+                // jiajianrong 20200122 不再提供js
+                /*{
                     name: 'React-ant-multi-pages',
                     value: 'react-ant-multi-pages'
-                }, {
+                }, */
+                {
                     name: 'React-ant-ts',
                     value: 'react-ant-ts'
                 }],
@@ -210,7 +207,8 @@ module.exports = class extends Generator {
             message: '作者 Email',
             default: pkgJSON.author.email,
             validate: function (input) {
-                return /^.+@.+\..+$/.test(input.trim()) || '请输入合法的 Email 地址!';
+                return true;
+                // /^.+@.+\..+$/.test(input.trim()) || '请输入合法的 Email 地址!';
             }
 
         }, {
@@ -231,14 +229,16 @@ module.exports = class extends Generator {
                 return /^\d+\.\d+\.\d+$/.test(input.trim()) || '请输入合法的版本号!';
             }
 
-        }, {
+        }, 
+        // jiajianrong 20200122 去掉自动安装
+        /*{
 
             name: 'installDep',
             message: '是否自动执行' + ' npm i'.yellow + ' 以安装依赖',
             type: 'confirm',
             default: false
 
-        }];
+        }*/];
 
         self.prompt(prompts).then(answer => {
 
@@ -423,9 +423,7 @@ module.exports = class extends Generator {
 
                 break;
 
-            case 'react-ant-multi-pages':
             case 'react-ant-ts':
-            case 'miniprogram-ts':
 
                 tplFile = `${this.frameType}`;
 
@@ -451,6 +449,47 @@ module.exports = class extends Generator {
                 this._copyReactCommonFiles({
                     outPutProjectFolder: outPutUrl
                 });
+                
+
+                break;
+            
+            //case 'react-ant-multi-pages':
+            case 'miniprogram-ts':
+
+                tplFile = `${this.frameType}`;
+
+                tplPath = this.templatePath(`../${tplFile}`);
+
+                this.fs.copyTpl(
+                    tplPath,
+                    outPutUrl,
+                    {
+                        name: this.name,
+                        author: this.author,
+                        frameType: this.frameType,
+                        email: this.email,
+                        version: this.version,
+                        desc: this.desc,
+                        groupName: this.groupName,
+                        resetCss: '',
+                        flexibleStr: ''
+                    }
+                );
+                
+                this.fs.copyTpl(
+                    this.templatePath(`./.eslintignore`),
+                    outPutUrl + '.eslintignore'
+                );
+                
+                this.fs.copyTpl(
+                    this.templatePath(`./.eslintrc.js`),
+                    outPutUrl + '.eslintrc.js'
+                );
+                
+                this.fs.copyTpl(
+                    this.templatePath(`./.gitignore`),
+                    outPutUrl + '.gitignore'
+                );
 
                 break;
                 
@@ -462,8 +501,8 @@ module.exports = class extends Generator {
         }
     }
 
-    install() {
+    /*install() {
         //是否自动安装依赖 npm install
         this.installDep && this.npmInstall();
-    }
+    }*/
 };

@@ -17,7 +17,8 @@ module.exports = {
       'document': true,
       'window': true,
       'expect': true,
-      'test': true
+      'test': true,
+      'requirePlugin': true,
     },
     rules: {
         // allow debugger during development

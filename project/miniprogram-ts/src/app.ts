@@ -1,4 +1,4 @@
-import { IAppOption } from '../typings';
+import { IAppOption } from 'ROOT_SOURCE/typings';
 
 // app.ts
 App<IAppOption>({
