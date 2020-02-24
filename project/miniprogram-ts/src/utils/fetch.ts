@@ -115,28 +115,6 @@ function _fetch(
             responseType: 'text',
             success(res): void {
                 if (res.statusCode >= 200 && res.statusCode < 300) {
-                    // 1. 服务端返回的数据 res.data 格式约定为object，其他的都不接收
-                    // if (!whatType.isObject(res.data)) {
-                    //     const _response = {
-                    //         ...res,
-                    //         toastMsg: '响应数据格式错误',
-                    //         errCode: FETCH_ERROR_CODE.RESPONSE_DATA_FORMAT_ERROR,
-                    //     };
-
-                    //     handleError(_response, config);
-                    //     reject(_response);
-
-                    //     return;
-                    // }
-
-                    // 2. 登录校验逻辑处理
-                    // if (config.login) {
-                    //     const isLogin = handleCheckLogin(res.data as IAnyObject);
-
-                    //     if (!isLogin) return;
-                    // }
-
-                    // 3. 验证完毕，这是可以给到用户的数据
                     resolve(res.data);
 
                     return;
@@ -183,26 +161,6 @@ const fetch = {
     post(url: string, params?: IAnyObject, config?: TFetchConfig): Promise<any> {
         return _fetch(url, 'POST', params, config);
     },
-
-    // wos 上传图片: <http://wiki.58corp.com/index.php?title=PIC>
-    // uploadImg(data: IAnyObject) {
-    //     const obj = {
-    //         'Pic-Data': data, // 根据Pic-Encoding中描述的编码方式编码的数据（必选）
-    //         'Pic-Size': '0 * 0', // 图片尺寸大小，设置参数约定: 0 * 0 表示宽和高，0为不进行尺寸缩放(必选)
-    //         'Pic-Encoding': 'base64', // 目前仅为base64 (必选)
-    //         'Pic-Path': '/nowater/yuefu/', // 图片访问的路径 （必选）
-    //     };
-
-    //     return _fetch(
-    //         '//upload.58cdn.com.cn/json?rand=0.1298',
-    //         'POST',
-    //         obj,
-    //         defaultFetchAutoConfig,
-    //         {
-    //             'Content-Type': 'text/plain',
-    //         },
-    //     );
-    // },
 };
 
 
